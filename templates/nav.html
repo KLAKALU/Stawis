@@ -12,25 +12,29 @@
     <title>Hello, world!</title>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-        <s class="navbar-brand">Stawis</s>
+        <a class="navbar-brand">Stawis</a>
         <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
+        <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                User
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Mail</a></li>
+                <li><a class="dropdown-item" href="#">Name</a></li>
+                <li><a class="dropdown-item" href="#">Total</a></li>
+                
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Login</a></li>
+                </ul>
+            </div>
         </form>
+        </div>
+    </nav>
 
-    <div class="dropdown">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-        Dropdown link
-    </a>    
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <li><a class="dropdown-item" href="#">Mail</a></li>
-        <li><a class="dropdown-item" href="#">Name</a></li>
-        <li><a class="dropdown-item" href="#">Total</a></li>
-        <li><a class="dropdown-item" href="#">Logout</a></li>
-    </ul>
-    </div>
 </div>
 
 </nav>
