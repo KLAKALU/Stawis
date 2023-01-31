@@ -1,6 +1,9 @@
 header{
     background-color: #27acd9;
-    height:70px;
+    height:65px;
+    width:100%;
+    position:relative;
+
 }
 .sa{
     color:black;
@@ -9,6 +12,66 @@ header{
     position:relative;
     left:20px;
     top:5px;
+}
+.rog{
+    position:absolute;
+    left:91%;
+    top:0%;
+    display: block;
+	text-align: center;
+	text-decoration: none;
+	width: 100px;
+    height:65px;
+	margin: auto;
+	padding-top:20px;
+	font-weight: bold;
+	background: black;
+	color: #fff;
+	transition: 0.5s;
+}
+.rog:hover {
+	color: black;
+	background: #fff;
+}
+.tuka{
+    position:absolute;
+    left:83%;
+    top:0%;
+    display: block;
+	text-align: center;
+	text-decoration: none;
+	width: 100px;
+    height:65px;
+	margin: auto;
+	padding-top:12px;
+	font-weight: bold;
+	background: #27acd9;
+	color: #fff;
+	transition: 0.5s;
+}
+.tuka:hover {
+	color: #27acd9;
+	background: #fff;
+}
+.towa{
+    position:absolute;
+    left:75%;
+    top:0%;
+    display: block;
+	text-align: center;
+	text-decoration: none;
+	width: 100px;
+    height:65px;
+	margin: auto;
+	padding-top:18px;
+	font-weight: bold;
+	background: #27acd9;
+	color: #fff;
+	transition: 0.5s;
+}
+.towa:hover {
+	color: #27acd9;
+	background: #fff;
 }
 .sha{
     position:absolute;
@@ -29,28 +92,6 @@ header{
     top:65%;
     left:32%;
 }
-.rog{
-    position:absolute;
-    bottom:86%;
-    left:74%;
-    display: block;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	width: 120px;
-	margin: auto;
-	padding: 1rem 4rem;
-	font-weight: bold;
-	border: 2px solid #27acd9;
-	background: #27acd9;
-	color: #fff;
-	border-radius: 100vh;
-	transition: 0.5s;
-}
-.rog:hover {
-	color: #27acd9;
-	background: #fff;
-}
 .sin{
     display: block;
 	text-align: center;
@@ -60,28 +101,91 @@ header{
 	margin: auto;
 	padding: 1rem 4rem;
 	font-weight: bold;
-	border: 2px solid #fd080b;
-	background: #fd080b;
-	color: white;
+	background-image: linear-gradient(to right, #27acd9 0%, #b4e12b 100%);
 	border-radius: 100vh;
+	color: #fff;
+	border: 2px solid #fff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 	transition: 0.5s;
     position:relative;
     left:50px;
-    top:20px;
+    top:30px;
 }
 .sin:hover{
-    color: #fd080b;
-	background: #fff;
+    color: #fff;
+	background-image: linear-gradient(to left, #27acd9 0%, #b4e12b 100%);
 }
 .tejun{
-    position:absolute;
-    top:640px;
+    position:relative;
+    top:300px;
     background-color:white;
     width:100%;
-    height:270px;
+    height:100%;
 }
 .tt{
     text-align:center;
+    width:600px;
+    position:absolute;
+    left:43%;
+    top:70px;
+    text-decoration:underline;
+}
+.doku{
+    position:relative;
+    top:30px;
+    left:120px;
+    width:650px;
+    height:400px;
+}
+.ye{
     background-color: #27acd9;
+    position:absolute;
+    top:240px;
+    left:50%;
+    width:520px;
+    height:210px;
+    padding:15px;
+}
+.kanri{
+    text-decoration:underline;
     color:white;
+    text-align:center;
+    font-family:"MS Mincho";
+}
+.kuwa{
+    position:relative;
+    top:30px;
+    display: block;
+	text-align: center;
+	text-decoration: none;
+	width: 200px;
+    height:30px;
+	margin: auto;
+	padding-top:10px;
+	font-weight: bold;
+	background: white;
+	color: #27acd9;
+	transition: 0.5s;
+}
+.tukai{
+    width:100%;
+    height:100%;
+    position:relative;
+    top:250px;
+}
+.tt2{
+    text-align:center;
+    width:600px;
+    position:absolute;
+    left:43%;
+    top:70px;
+    text-decoration:underline;
+}
+.doku2{
+    position:relative;
+    top:30px;
+    left:120px;
+    width:650px;
+    height:400px;
 }
