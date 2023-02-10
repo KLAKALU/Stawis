@@ -1,19 +1,102 @@
 
+.fixed { 
+    display:none;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 15px;
+    right: 25px;
+    padding: 10px 20px;
+    z-index:999;
+    background-color:white ;
+    color:#0d6ff8 ;
+    font-size:30px;
+    border-style:solid;
+    border-color:#0d6ff8 ;
+    }
+.fixed:hover{
+    background-color:#0d6ff8  ;
+    color:white;
+}
 header{
     background-color: #27acd9;
     height:65px;
     width:100%;
     position:relative;
-
+    z-index:10;
 }
-.sa{
+.t{
     color:black;
-    font-size:40px;
-    font-family: 'Caveat', cursive;
     position:relative;
     left:20px;
-    top:5px;
+    width:104px;
 }
+.t h3{
+    font-size:32px;
+    font-family: 'Caveat', cursive;
+    position:relative;
+    bottom:4px;
+}
+.t p{
+    font-size:13px;
+    font-family:"Yu Mincho";
+    position:relative;
+    bottom:35px;
+    border-top: 3px solid #333;
+}
+.has-sub{
+    position:relative;
+    left:1025px;
+    bottom:92px;
+    display:block;
+    width:130px;
+}
+.me{
+	text-align: center;
+	text-decoration: none;
+	width: 150px;
+    height:70px;
+	margin: auto;
+	padding:20px 30px 19px 30px;
+	font-weight: bold;
+	background: #27acd9;
+	color: #fff;
+	transition: 0.5s;
+}
+.me:hover {
+	color: #27acd9;
+	background: #fff;
+}
+.sub {
+    display: none;
+    position: relative;
+    right:40px;
+    width: 130px;
+    list-style-type: none;
+    height:160px;
+    z-index: 3;
+  }
+  .sub > li > a {
+    font-weight: bold;
+    color: #fff;
+    line-height: 1.75;
+    background-color: #27acd9;
+    line-height: 1.75;
+    position:absolute;
+  }
+  .sub > li > a:hover {
+    background-color: #fff;
+    color:#27acd9;
+  }
+  .sub1{
+    padding:20px 19px 20px 18px;
+    bottom:88px;
+    z-index:2;
+  }
+  .sub2{
+    padding:85px 38px 20px 38px;
+    top:4px;
+    z-index:1;
+  }
 .rog{
     position:absolute;
     left:1150px;
@@ -34,31 +117,8 @@ header{
 	color: black;
 	background: #fff;
 }
-.menu{
-    position:relative;
-    left:480px;
-    bottom:95px;
-}
-.menu p{
-    text-align: center;
-	text-decoration: none;
-	width: 100px;
-    height:47px;
-	margin: auto;
-	padding-top:18px;
-	font-weight: bold;
-	background: #27acd9;
-	color: #fff;
-	transition: 0.5s;
-}
-.menu p:hover {
-	color: #27acd9;
-	background: #fff;
-}
-.hidden{
-    display:none;
-}
 .tu{
+    display:block;
     position:relative;
     bottom:20px;
     right:40px;
@@ -80,7 +140,7 @@ header{
 .sha{
     position:absolute;
     z-index:-1;
-    width:100%;
+    width:99%;
     height:550px;
 }
 .catch{
