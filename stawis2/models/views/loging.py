@@ -1,7 +1,7 @@
 from flask import request, redirect, url_for, render_template, flash, session
-from cafe_site import app
+from stawis2 import app
 from functools import wraps
-from cafe_site.models.users import User
+from stawis2.models.users import User
 import bcrypt
 from flask import Blueprint
 
@@ -27,6 +27,8 @@ def login():
             return render_template('login.html')
         if request.form['username'] != user.username:
             flash('ユーザ名が異なります')
+        elif bcrypt.hashpw(request.form['mail'].encode(), user.salt.encode()).decode() != user.mail:
+            flash('メールアドレスが異なります')
         elif bcrypt.hashpw(request.form['password'].encode(), user.salt.encode()).decode() != user.password:
             flash('パスワードが異なります')
         else:

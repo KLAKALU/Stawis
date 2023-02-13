@@ -1,8 +1,8 @@
-from cafe_site import db
+from stawis2 import db
 from datetime import datetime
 
 class Review(db.Model):
-    from cafe_site.models.users import User
+    from stawis2.models.users import User
     __tablename__ = 'Reviews'
     id = db.Column(db.Integer, primary_key=True)
     star = db.Column(db.Integer)

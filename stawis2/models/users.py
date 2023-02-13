@@ -1,4 +1,4 @@
-from STAWIS import db
+from stawis2 import db
 from datetime import datetime
 import bcrypt
 
