@@ -1,0 +1,38 @@
+{% extends "theme.html" %}
+{% block title %}stawis{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+    <h2 class="page-title">Signup</h2>
+</div>
+<div class="login-content wrapper">
+<form action="{{ url_for('user.add_user') }}" method=post>
+    <div>
+    <label for="name">ユーザ名</label>
+    <input placeholder="username" type="text" name=username>
+    </div>
+    <div>
+    <label for="Password">メールアドレス</label>
+    <input placeholder="mail" type="mail" name=mail>
+    </div>
+    <div>
+    <label for="Password">パスワード</label>
+    <input placeholder="password" type="password" name=password>
+    </div>
+    <div>
+    <label for="Password">再度パスワード入力</label>
+    <input placeholder="repassword" type="repassword" name=repassword>
+    </div>
+    <input type="submit" class="button" value="新規登録">
+</form>
+</div>
+{% endblock %}
+{% block footer %}
+<footer>
+    <div class="wrapper">
+        <p><small>&copy; Coffee House</small></p>
+    </div>
+</footer>
+{% endblock %}
