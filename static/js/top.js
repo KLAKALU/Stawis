@@ -12,6 +12,7 @@ window.addEventListener("scroll", function () {
     tejun.style.opacity=k.toString();
   });
 
+  //メニュー
   $(function(){
     $(".has-sub").mouseover(function(){
       $(this).children(".sub").stop().slideDown();
@@ -21,6 +22,7 @@ window.addEventListener("scroll", function () {
     });
   });
 
+  //上にスクロールボタン
   $(function() {
     $(window).on("scroll", function() {
       if($(this).scrollTop() > 400) {
@@ -30,7 +32,6 @@ window.addEventListener("scroll", function () {
       }
     });
   });
-
   const scroll_top = function () {
     const topLeft = document.getElementById("nav").getBoundingClientRect().left;
     const topTop = document.getElementById("nav").getBoundingClientRect().top;
