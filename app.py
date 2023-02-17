@@ -41,9 +41,9 @@ def register():
     """
 
     if request.method == 'POST':
-        email = request.form.get("email")
+        email = request.form.get("mail")
         password = request.form.get('password')
-        confirmation = request.form.get('confirm_password')
+        confirmation = request.form.get('repassword')
         username = request.form.get('username')
 
         error_message = ""
