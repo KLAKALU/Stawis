@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template
-from  STAWIS import db
-from stawis2.views.loging import login_required
+
 app = Flask(__name__)
 
 
