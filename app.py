@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, login_required, flash, session, datetime, redirect, psycopg2_connect, check_password_hash, generate_password_hash
+from flask import Flask, request, render_template,  flash, session, datetime, redirect, psycopg2_connect, check_password_hash, generate_password_hash
 
 
 app = Flask(__name__)
@@ -22,7 +22,6 @@ if __name__ == '__main__':
 #ログアウト機能
 
 @app.route("/logout")
-@login_required
 def logout():
     # セッション情報をクリア
     session.clear()
