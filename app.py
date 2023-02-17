@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template,  flash, session, redirect, psycopg2_connect, check_password_hash, generate_password_hash, datetime
-from sqlalchemy import DateTime
+from datetime import datetime
+
 
 app = Flask(__name__)
 
