@@ -47,7 +47,7 @@ if __name__ == '__main__':
 @login_required
 def logout():
     logout_user()
-    return redirect("/logout")
+    return redirect("/login")
 
 #新規登録
 
