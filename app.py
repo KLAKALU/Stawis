@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, login_required, flash, session, datetime, redirect, psycopg2_connect, check_password_hash, generate_password_hash
+
 
 app = Flask(__name__)
 
@@ -81,7 +82,7 @@ def register():
 
 #ログイン機能
 
-        @app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     """
     GET: loginページの表示
