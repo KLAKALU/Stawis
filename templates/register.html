@@ -10,10 +10,11 @@
     <h2 class="page-title">Signup</h2>
 </div>
 </head>
-<div class="login-content wrapper">
-<form action="{{ url_for('user.add_user') }}" method=post>
+
 
 <body>
+    <div class="login-content wrapper">
+        <form action="{{ url_for('user.add_user') }}" method=post>
     <div>
     <label for="name">ユーザ名</label>
     <input placeholder="username" type="text" name=username>
