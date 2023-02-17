@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="C:\Users\nisui\Stawis\css\add.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAWIS</title>
+<div class="wrapper">
+    <h2 class="page-title">Signup</h2>
+</div>
+</head>
+<div class="login-content wrapper">
+<form action="{{ url_for('user.add_user') }}" method=post>
+
+<body>
+    <div>
+    <label for="name">ユーザ名</label>
+    <input placeholder="username" type="text" name=username>
+    </div>
+    <div>
+    <label for="Password">メールアドレス</label>
+    <input placeholder="mail" type="mail" name=mail>
+    </div>
+    <div>
+    <label for="Password">パスワード</label>
+    <input placeholder="password" type="password" name=password>
+    </div>
+</form>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
-
+from  STAWIS import db
+from stawis2.views.loging import login_required
 app = Flask(__name__)
 
 
@@ -78,5 +79,48 @@ def register():
 
     else:
         return render_template("register.html")
+
+#ログイン機能
+
+        @app.route('/login', methods=['GET', 'POST'])
+def login():
+    """
+    GET: loginページの表示
+    POST: username, passwordの取得, sesion情報の登録
+    """
+    global status
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get('password')
+        # hash = generate_password_hash(password)
+        # global status
+
+        error_message = ""
+
+        # PostgreSQL Server へ接続
+        con = psycopg2_connect()
+        cur = con.cursor()
+        cur.execute("SELECT password, id FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchall()
+        # メールアドレス：ユーザーデータは1:1でないといけない（新規登録画面でその処理書いてくれると嬉しいです！（既に同じメールアドレスが存在している場合はエラーメッセージを渡す等））
+        if len(user_data) == 1:
+            for row in user_data:
+                if check_password_hash(row[0], password):
+                    con.close()
+                    session["id"] = row[1]
+                    status = True
+                    return redirect("/")                   
+                    # return render_template("index2.html", status=status)
+                else:
+                    con.close()
+                    error_message = "パスワードが異なります"
+                    return render_template("login.html", error_message=error_message)
+        else:
+            con.close()
+            # ↓現段階では登録されていない or メールアドレスが重複して登録されている
+            error_message = "入力されたメールアドレスは登録されていません"
+            return render_template("login.html", error_message=error_message)
+    else:
+        return render_template("login.html")
 
 
