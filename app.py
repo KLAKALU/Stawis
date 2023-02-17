@@ -42,7 +42,7 @@ def register():
     """
 
     if request.method == 'POST':
-        email = request.form.get("mail")
+        email = request.form.get("email")
         password = request.form.get('password')
         confirmation = request.form.get('repassword')
         username = request.form.get('username')
