@@ -47,7 +47,7 @@ if __name__ == '__main__':
 @login_required
 def logout():
     logout_user()
-    return redirect("/")
+    return redirect("/logout")
 
 #新規登録
 
@@ -89,7 +89,7 @@ def login():
         email = request.form.get("email")
         password = request.form.get('password')
         # hash = generate_password_hash(password)
-        # global status
+        
 
         # Userテーブルからusernameに一致するユーザを取得
         user = User.query.filter_by(email=email, username=username).first()
@@ -98,5 +98,4 @@ def login():
             return redirect('/')
     else:
         return render_template("login.html")
-
 
