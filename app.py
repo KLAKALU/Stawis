@@ -18,13 +18,13 @@ class User(UserMixin, db.Model):
 	password = db.Column(db.String(25))
 
 
+login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-app = Flask(__name__)
-
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -57,7 +57,6 @@ def register():
     GET: register.htmlの表示
     POST: ユーザの追加
     """
-
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get('password')
@@ -70,26 +69,20 @@ def register():
         return redirect('/login')
     else:
         return render_template('register.html')
-        # ------------------------------------------------------------------------
-
-    
-        
 
 #ログイン機能
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
     GET: loginページの表示
     POST: username, passwordの取得, sesion情報の登録
     """
-    
+
     if request.method == 'POST':
         username =  request.form.get("username")
         email = request.form.get("email")
         password = request.form.get('password')
         # hash = generate_password_hash(password)
-        
 
         # Userテーブルからusernameに一致するユーザを取得
         user = User.query.filter_by(email=email, username=username).first()
@@ -98,16 +91,3 @@ def login():
             return redirect('/')
     else:
         return render_template("login.html")
-    
-    #新規登録画面へ遷移
-
-@app.route("/register2")
-def register():
-        return render_template("register.html")
-    
-    #ログイン画面へ遷移
-@app.route('/login2')
-def login():
-        return render_template("login.html")
-    
-
