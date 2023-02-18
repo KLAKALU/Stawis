@@ -77,7 +77,6 @@ def login():
     GET: loginページの表示
     POST: username, passwordの取得, sesion情報の登録
     """
-
     if request.method == 'POST':
         username =  request.form.get("username")
         email = request.form.get("email")
