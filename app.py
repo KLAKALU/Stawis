@@ -98,4 +98,16 @@ def login():
             return redirect('/')
     else:
         return render_template("login.html")
+    
+    #新規登録画面へ遷移
+
+@app.route("/register2")
+def register():
+        return render_template("register.html")
+    
+    #ログイン画面へ遷移
+@app.route('/login2')
+def login():
+        return render_template("login.html")
+    
 
