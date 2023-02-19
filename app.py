@@ -63,9 +63,9 @@ def register():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get('password')
-        confirmation = request.form.get('repassword')
+        repassword = request.form.get('repassword')
         username = request.form.get('username')
-        user = User(email=email,username=username,confirmation=confirmation, password=generate_password_hash(password, method='sha256'))
+        user = User(email=email,username=username,repassword=repassword, password=generate_password_hash(password, method='sha256'))
         db.session.add(user)
         db.session.commit()
         return redirect('/login')
