@@ -65,11 +65,12 @@ def register():
         password = request.form.get('password')
         repassword = request.form.get('repassword')
         username = request.form.get('username')
-        #
+        if password != repassword:
+            return redirect('/register')
         user = User(email=email,username=username, password=generate_password_hash(password, method='sha256'))
         db.session.add(user)
         db.session.commit()
-        return redirect('/')
+        return render_template('login.html')
     else:
         return render_template('register.html')
 
@@ -90,6 +91,6 @@ def login():
         user = User.query.filter_by(email=email, username=username).first()
         if check_password_hash(user.password, password):
             login_user(user)
-            return redirect('/')
+            return render_template('top.html')
     else:
         return render_template("login.html")
