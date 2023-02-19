@@ -5,23 +5,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pytz
-from _sqlite3 import *
-
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False, unique=True)
-    email = db.Column(db.String(50), nullable=False, unique=True)    
-    password = db.Column(db.String(25))
-    createday = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone('Asia/Tokyo')))
-    
+    title = db.Column(db.String(50), nullable=False)
+    body = db.Column(db.String(500), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone('Asia/Tokyo')))
 
 
 login_manager.init_app(app)
@@ -56,7 +52,6 @@ def logout():
     return redirect("/login")
 
 #新規登録
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """
@@ -68,7 +63,6 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('repassword')
         username = request.form.get('username')
-
         user = User(email=email,username=username,confirmation=confirmation, password=generate_password_hash(password, method='sha256'))
         db.session.add(user)
         db.session.commit()
