@@ -3,6 +3,8 @@ from flask import render_template, request, redirect
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+import pytz
 
 
 app = Flask(__name__)
@@ -13,9 +15,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 class User(UserMixin, db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(50), nullable=False, unique=True)
-	password = db.Column(db.String(25))
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    email = db.Column(db.String(50), nullable=False, unique=True)    
+    password = db.Column(db.String(25))
+    createday = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone('Asia/Tokyo')))
+    
 
 
 login_manager.init_app(app)
