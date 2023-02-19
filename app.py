@@ -65,10 +65,10 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('repassword')
         username = request.form.get('username')
-        user = User(email=email,username=username,confirmation=confirmation, password=generate_password_hash(password, method='sha256'))
+        user = User(email=email,username=username, password=generate_password_hash(password, method='sha256'))
         db.session.add(user)
         db.session.commit()
-        return redirect('/login')
+        return redirect('/')
     else:
         return render_template('register.html')
 
