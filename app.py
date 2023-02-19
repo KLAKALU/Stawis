@@ -13,10 +13,12 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-class User(db.Model):
+# ログインページのエンドポイント
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    body = db.Column(db.String(500), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone('Asia/Tokyo')))
 
 
