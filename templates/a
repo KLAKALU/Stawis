@@ -1,0 +1,22 @@
+ <div class="login-content wrapper">
+        <form action="" method=post>
+    <div>
+    <label for="name">ユーザ名</label>
+    <input placeholder="username" type="text" name=username>
+    </div>
+    <div>
+    <label for="email">メールアドレス</label>
+    <input placeholder="email" type="email" name=email>
+    </div>
+    <div>
+    <label for="password">パスワード</label>
+    <input placeholder="password" type="password" name=password>
+    </div>
+    <div>
+    <label for="repassword">再度パスワード入力</label>
+    <input placeholder="repassword" type="password" name=repassword>
+    </div>
+
+    <input type="submit" class="button"  href="/register" value="新規登録">
+</form>
+</div>
