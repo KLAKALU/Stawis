@@ -2,45 +2,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="C:\Users\nisui\Stawis\css\add.css">
+    <link rel="stylesheet" href="../static/css/add.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STAWIS</title>
 </head>
+
 <body>
-
-<div class="box">
-    <!--isbn-->
-    <form action ="" method="">
-        <div class="isbn">
-            <p1> ISBN</p1>
-            <input class="input_isbm" type="text" id="isbn" namr="isbn"/>
-        </div>
-
-    <!--tagu -->
-    <form action ="" method="">
-        <div class="tagu">
-            <p2> タグ</p2>
-            <input class="input_tag" type="text"  id="tagu" name="tagu"    
-        </div>
-    </form>
-    <!--登録ボタン-->
-    <button id="btn" class="btn">登録</button>
-
-    <script>
-    var btn = document.getElementById('btn');
-
-    btn.addEventListener('click', function() {
-    var result = window.confirm('この内容でよろしいですか？');
-        if( result ) {
-            console.log('OKがクリックされました');
-        }
-        else {
-            console.log('キャンセルがクリックされました');
-        }
-        });
-    </script>
-</div>
+    <div class="box">
+        <form action="/search_" method="POST" class="input_isbm">
+            <div>
+                <label for="formFile">isbn</label>
+                <input class="input_isbm" type="text" name=ISBN_ step="1.0" max="120" min="0">
+                <button type="submit" class="btn">検索</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
 <!--作業ノート
