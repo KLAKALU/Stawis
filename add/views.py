@@ -24,7 +24,6 @@ def scraping(isbn):
             img=open("./static/img/im.jpg", 'wb')
             res.raw.decode_content = True
             shutil.copyfileobj(res.raw, img)
-
     if title==[] and writer==[] and com==[] and price==[]:
         return "本が見つかりませんでした。"
     else:
