@@ -1,5 +1,4 @@
-from flask import request,render_template
-from add.init import app
+from flask import request,render_template,Flask
 import requests,bs4,codecs,shutil
 
 def scraping(isbn):
@@ -22,7 +21,7 @@ def scraping(isbn):
         img_url="https://www.kinokuniya.co.jp" + img_src[2:]
         res = requests.get(img_url, stream=True)
         if res.status_code == 200:
-            img=open("./static/im.jpg", 'wb')
+            img=open("./static/img/im.jpg", 'wb')
             res.raw.decode_content = True
             shutil.copyfileobj(res.raw, img)
 
@@ -36,6 +35,8 @@ def scraping(isbn):
         info=[title_, writer_, com_, price_, url]
     ***REMOVED***
     
+app=Flask(__name__)
+
 @app.route("/")
 def show_():
     return render_template("b.html")

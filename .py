@@ -1,4 +1,4 @@
-import requests,bs4,codecs,os,shutil,cv2
+
 from add.views import scraping
 
-print(scraping(9784088830728))
+print(scraping(9784088832920))
