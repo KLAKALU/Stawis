@@ -114,5 +114,4 @@ def search():
         file.write('<a href="' + scraping(request.form['ISBN'])[4] + '">購入はこちら</a>\n')
         file.write('<img src="' + './static/im.jpg' + '">')
         file.close()
-
         return render_template('c.html')
