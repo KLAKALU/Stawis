@@ -105,7 +105,6 @@ def login():
 import codecs 
 from scraping import scraping
 from script import *
-
 @app.route("/search", methods=["POST"])
 def search():
     if scraping(request.form.get("ISBN")) == 1:
