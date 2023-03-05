@@ -1,4 +1,6 @@
-import shutil,requests,bs4,codecs
+#ISBN検索
+import requests,bs4
+
 def scraping(isbn):
     url=r"https://www.kinokuniya.co.jp/f/dsg-01-" + str(isbn)
     open_=requests.get(url)
@@ -18,16 +20,21 @@ def scraping(isbn):
         img_src=src[1]
         img_url="https://www.kinokuniya.co.jp" + img_src[2:]
         res = requests.get(img_url, stream=True)
+        image_name = img_src[2:].rsplit('/', 1)[1]
         if res.status_code == 200:
-            img=open("./static/img/im.jpg", 'wb')
-            res.raw.decode_content = True
-            shutil.copyfileobj(res.raw, img)
+            with open(f"images/" + image_name, "wb") as f:
+                f.write(res.content)
+            # img=open("./static/img/im.jpg", 'wb')
+            # res.raw.decode_content = True
+            # shutil.copyfileobj(res.raw, img)
     if title==[] and writer==[] and com==[] and price==[]:
-        return "本が見つかりませんでした。"
+        print("本が見つかりませんでした。")
+        return None
     else:
-        title_=title[0].getText()
-        writer_=writer[0].getText()
-        com_=com[1].getText()
-        price_=price[2].getText()
-        info=[title_, writer_, com_, price_, url]
+    ***REMOVED***
+        info["title"] = title[0].getText()
+        info["writer"] = writer[0].getText()
+        info["com"] = com[1].getText()
+        info["price"] = price[2].getText()
+        info["img_url"] = img_url
     ***REMOVED***

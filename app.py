@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import render_template, request, redirect
-from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 import shutil,requests,bs4,codecs
@@ -101,17 +100,27 @@ def login():
     else:
         return render_template("login.html")
 
-#ISBN検索
+
+import codecs 
+from scraping import scraping
+from script import *
+
 @app.route("/search", methods=["POST"])
 def search():
-    if request.method == "POST":
-        scraping(request.form['ISBN'])
+    if scraping(request.form.get("ISBN")) == None:
+        script.alt()
+    if scraping(request.form.get("ISBN")) == info:
+        print(request.form.get("ISBN"))
+        info = scraping(request.form.get("ISBN"))
+        print(info)
         file = codecs.open("./templates/c.html",'w','utf-8','ignore')
         s = '\xa0'
         file.write(s)
         file.write("<meta charset='utf-8'>")
-        file.write(scraping(request.form['ISBN'][0:3]))
-        file.write('<a href="' + scraping(request.form['ISBN'])[4] + '">購入はこちら</a>\n')
-        file.write('<img src="' + './static/im.jpg' + '">')
+        file.write(info["title"])
+        file.write(info["writer"])
+        file.write(info["com"])
+        # file.write('<a href="' + info["price"] + '">購入はこちら</a>\n')
+        file.write('<img src="' + info["img_url"] + '">')
         file.close()
-        return render_template('d.html')
+        return render_template('c.html')
