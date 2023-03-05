@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template, request, redirect
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 import shutil,requests,bs4,codecs
@@ -107,8 +108,8 @@ from script import *
 
 @app.route("/search", methods=["POST"])
 def search():
-    if scraping(request.form.get("ISBN")) == None:
-        script.alt()
+    if scraping(request.form.get("ISBN")) == 1:
+        script.al()
     if scraping(request.form.get("ISBN")) == info:
         print(request.form.get("ISBN"))
         info = scraping(request.form.get("ISBN"))
