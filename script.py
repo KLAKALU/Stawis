@@ -8,14 +8,14 @@ var = Scope( JS_BUILTINS )
 set_global_object(var)
 
 # Code follows:
-var.registers(['alert'])
+var.registers(['al'])
 @Js
-def PyJsHoisted_alert_(name, this, arguments, var=var):
-    var = Scope({'name':name, 'this':this, 'arguments':arguments}, var)
-    var.registers(['name'])
-    var.get('console').callprop('log', var.get('name'))
-PyJsHoisted_alert_.func_name = 'alert'
-var.put('alert', PyJsHoisted_alert_)
+def PyJsHoisted_al_(this, arguments, var=var):
+    var = Scope({'this':this, 'arguments':arguments}, var)
+    var.registers([])
+    var.get('window').callprop('alert', Js('存在しないISBNが入力されました'))
+PyJsHoisted_al_.func_name = 'al'
+var.put('al', PyJsHoisted_al_)
 pass
 pass
 
