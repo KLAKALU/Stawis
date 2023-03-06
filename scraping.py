@@ -29,7 +29,7 @@ def scraping(isbn):
             # shutil.copyfileobj(res.raw, img)
     if title==[] and writer==[] and com==[] and price==[]:
         print("本が見つかりませんでした。")
-        return 1
+        return None
     else:
         info = {}
         info["title"] = title[0].getText()
