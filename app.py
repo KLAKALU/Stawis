@@ -74,8 +74,6 @@ def register():
         return render_template('register.html')
         # ------------------------------------------------------------------------
 
-    
-        
 
 #ログイン機能
 
@@ -107,11 +105,11 @@ from scraping import scraping
 from script import *
 @app.route("/search", methods=["POST"])
 def search():
-    if scraping(request.form.get("ISBN")) == 1:
+    info = scraping(request.form.get("ISBN"))
+    if info == None:
         script.al()
-    if scraping(request.form.get("ISBN")) == info:
+    else:
         print(request.form.get("ISBN"))
-        info = scraping(request.form.get("ISBN"))
         print(info)
         file = codecs.open("./templates/c.html",'w','utf-8','ignore')
         s = '\xa0'
