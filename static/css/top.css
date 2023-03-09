@@ -45,8 +45,8 @@ header{
 }
 .has-sub{
     position:relative;
-    left:1025px;
-    bottom:92px;
+    left:1022px;
+    bottom:158px;
     display:block;
     width:130px;
 }
@@ -98,9 +98,9 @@ header{
     z-index:1;
   }
 .rog{
-    position:absolute;
-    left:1150px;
-    bottom:0px;
+    position:relative;
+    left:573px;
+    bottom:113px;
     display:block;
 	text-align: center;
 	text-decoration: none;
@@ -205,8 +205,8 @@ header{
 }
 .ye{
     background-color: #27acd9;
-    position:absolute;
-    top:240px;
+    position:relative;
+    bottom:190px;
     left:50%;
     width:520px;
     height:210px;
@@ -247,17 +247,16 @@ header{
 }
 .tejun2{
     position:relative;
-    top:300px;
-    background-color:white;
+    top:200px;
     width:100%;
     height:100%;
 }
 .tt2{
     text-align:center;
     width:600px;
-    position:absolute;
+    position:relative;
     left:43%;
-    top:70px;
+    top:150px;
     text-decoration:underline;
 }
 .doku2{
@@ -269,8 +268,8 @@ header{
 }
 .ye2{
     background-color: white;
-    position:absolute;
-    top:240px;
+    position:relative;
+    bottom:160px;
     left:50%;
     width:520px;
     height:210px;
@@ -310,7 +309,7 @@ footer{
     width:100%;
     height:140px;
     position:relative;
-    top:350px;
+    top:250px;
 }
 .sin2{
     display: block;
