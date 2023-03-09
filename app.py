@@ -77,7 +77,7 @@ def register():
         db.session.commit()
         return redirect('/add')
     else:
-        return render_template('add.html')
+        return render_template('top.html')
         # ------------------------------------------------------------------------
 
     
@@ -105,7 +105,7 @@ def login():
             login_user(user)
             return redirect('/add')
     else:
-        return render_template("add.html")
+        return render_template("login.html")
 
 
 import codecs 
