@@ -66,10 +66,15 @@ def register():
         confirmation = request.form.get('repassword')
         username = request.form.get('username')
 
+        error_message = ""
+
+        if password != confirmation:
+            error_message = "確認用パスワードと一致しませんでした。"
+
         user = User(email=email,username=username,confirmation=confirmation, password=generate_password_hash(password, method='sha256'))
         db.session.add(user)
         db.session.commit()
-        return redirect('/login')
+        return redirect('/add')
     else:
         return render_template('register.html')
         # ------------------------------------------------------------------------
@@ -95,7 +100,7 @@ def login():
         user = User.query.filter_by(email=email, username=username).first()
         if check_password_hash(user.password, password):
             login_user(user)
-            return redirect('/')
+            return redirect('/add')
     else:
         return render_template("login.html")
 
