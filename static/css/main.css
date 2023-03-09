@@ -1,0 +1,73 @@
+/*+ボタン*/
+.fixed { 
+    display:block;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 17px;
+    right: 27px;
+    padding: 10px 20px;
+    z-index:999;
+    background-color:white ;
+    color:#0d6ff8 ;
+    font-size:30px;
+    border-style:solid;
+    border-color:#0d6ff8 ;
+    text-decoration: none;
+    }
+.fixed:hover{
+    background-color:#0d6ff8  ;
+    color:white;
+}
+/*ヘッダ*/
+header{
+    background-color: #27acd9;
+    height:65px;
+    width:100%;
+    position:relative;
+    z-index:10;
+}
+.t{
+    color:black;
+    position:relative;
+    left:20px;
+    width:104px;
+}
+.t h3{
+    font-size:32px;
+    font-family: 'Caveat', cursive;
+    position:relative;
+    bottom:4px;
+}
+.t p{
+    font-size:13px;
+    font-family:"Yu Mincho";
+    position:relative;
+    bottom:35px;
+    border-top: 3px solid #333;
+}
+/*ログアウト*/
+.rog{
+    position:relative;
+    left:581px;
+    bottom:113px;
+    width: 100px;
+    height:45px;
+    display:block;
+	text-align: center;
+	text-decoration: none;
+	padding-top:20px;
+    margin: auto;
+	font-weight: bold;
+	background: black;
+	color: #fff;
+	transition: 0.5s;
+}
+.rog:hover {
+	color: black;
+	background: #fff;
+}
+.n{
+    position:relative;
+    top:40%;
+    left:45%;
+}
