@@ -1,3 +1,4 @@
 /images/*
 !/images/example.png
 __pycache__
+.DS_STORE
