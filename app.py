@@ -11,6 +11,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 db = SQLAlchemy(app)
 
+def init_db(app):
+  db.init_app(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -65,9 +68,7 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('repassword')
         username = request.form.get('username')
-
         error_message = ""
-
         if password != confirmation:
             error_message = "確認用パスワードと一致しませんでした。"
             print(error_message)
@@ -77,7 +78,7 @@ def register():
         db.session.commit()
         return redirect('/add')
     else:
-        return render_template('top.html')
+        return render_template('register.html')
         # ------------------------------------------------------------------------
 
     
@@ -98,7 +99,6 @@ def login():
         password = request.form.get('password')
         # hash = generate_password_hash(password)
         # global status
-
         # Userテーブルからusernameに一致するユーザを取得
         user = User.query.filter_by(email=email, username=username).first()
         if check_password_hash(user.password, password):
