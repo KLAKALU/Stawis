@@ -2,29 +2,28 @@ from flask import Flask
 from flask import render_template, request, redirect, flash, url_for
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 from flask_sqlalchemy import SQLAlchemy
 import codecs
 from scraping import scraping
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
+app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-class User(UserMixin, db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(50), nullable=False, unique=True)
-	email = db.Column(db.String(50), nullable=False, unique=True)
-	password = db.Column(db.String(25), nullable=False, unique=True)
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-app = Flask(__name__)
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15), unique=True)
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(80))
 
 if __name__ == '__main__':
     app.debug = True
@@ -42,16 +41,15 @@ def register():
     GET: register.htmlの表示
     POST: ユーザの追加
     """
-
     if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get("email")
-        password = request.form.get('password')
-        print(username)
-        print(email)
-        print(password)
-        user = User(email=email,username=username,password=generate_password_hash(password, method='sha256'))
-        db.session.add(user)
+        # create user object
+        new_user = User(
+            username = request.form.get('username'),
+            email = request.form.get("email"),
+            password=generate_password_hash(request.form.get('password'), method='sha256')
+        )
+        print(new_user)
+        db.session.add(new_user)
         db.session.commit()
         return redirect(redirect(url_for("main")))
     else:
