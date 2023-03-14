@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, flash
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -68,6 +68,10 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('repassword')
         username = request.form.get('username')
+        if username == "":
+            flash("ユーザー名を入力してください。", "failed")
+        if email == "":
+            flash("emailを入力してください。", "failed")
         error_message = ""
         if password != confirmation:
             error_message = "確認用パスワードと一致しませんでした。"
