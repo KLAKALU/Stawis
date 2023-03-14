@@ -1,18 +1,15 @@
 from flask import Flask
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect, flash, url_for
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-import shutil,requests,bs4,codecs
+import codecs
 from scraping import scraping
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
-
-def init_db(app):
-  db.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -20,39 +17,22 @@ login_manager.init_app(app)
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(50), nullable=False, unique=True)
-	password = db.Column(db.String(25))
-
+	email = db.Column(db.String(50), nullable=False, unique=True)
+	password = db.Column(db.String(25), nullable=False, unique=True)
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 app = Flask(__name__)
-
-
-@app.route("/add", methods=["GET", "POST"])
-def add():
-    return render_template("add.html")
-
-@app.route("/", methods=["GET", "POST"])
-def top():
-    return render_template("top.html")
-
-
 
 if __name__ == '__main__':
     app.debug = True
     app.run(host='127.0.0.1')
 
-
-#ログアウト機能
-
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return redirect("/")
+@app.route("/", methods=["GET", "POST"])
+def top():
+    return render_template("top.html")
 
 #新規登録
 
@@ -64,29 +44,19 @@ def register():
     """
 
     if request.method == 'POST':
+        username = request.form.get('username')
         email = request.form.get("email")
         password = request.form.get('password')
-        confirmation = request.form.get('repassword')
-        username = request.form.get('username')
-        if username == "":
-            flash("ユーザー名を入力してください。", "failed")
-        if email == "":
-            flash("emailを入力してください。", "failed")
-        error_message = ""
-        if password != confirmation:
-            error_message = "確認用パスワードと一致しませんでした。"
-            print(error_message)
-
-        user = User(email=email,username=username,confirmation=confirmation, password=generate_password_hash(password, method='sha256'))
+        print(username)
+        print(email)
+        print(password)
+        user = User(email=email,username=username,password=generate_password_hash(password, method='sha256'))
         db.session.add(user)
         db.session.commit()
-        return redirect('/add')
+        return redirect(redirect(url_for("main")))
     else:
         return render_template('register.html')
         # ------------------------------------------------------------------------
-
-    
-        
 
 #ログイン機能
 
@@ -111,6 +81,25 @@ def login():
     else:
         return render_template("login.html")
 
+#ログアウト機能
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+    
+# メイン画面
+
+@app.route("/main", methods=["GET"])
+def main():
+    return render_template('main.html')
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    return render_template("add.html")
+
+# スクレイピング機能
 
 import codecs 
 from scraping import scraping
