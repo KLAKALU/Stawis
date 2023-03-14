@@ -22,7 +22,7 @@
             <div class="col-7 offset-7">
             <div class="col-7">
             <label for="inputEmail4" class="form-label">Username</label>
-            <input type="username" class="form-control" id="inputEmail4">
+            <input type="username" class="form-control" id="inputEmail4" required>
             </div>
             </div>
         </div>
@@ -30,22 +30,14 @@
         <div class="col-7 align-self-center">
             <div class="col-6 offset-7">
             <label for="inputPassword4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputPassword4">
+            <input type="email" class="form-control" id="inputPassword4" required>
             </div>
         </div>
         <div class="row justify-content-center"></div>
         <div class="col-7 align-self-center">
             <div class="col-6 offset-7">
             <label for="inputAddress" class="form-label">Password</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="" required [A-Za-z]{8}>
-            </div>
-        </div>
-
-        <div class="row justify-content-center"></div>
-        <div class="col-7 align-self-center">
-            <div class="col-6 offset-7">
-            <label for="inputAddress" class="form-label">Password再度入力</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="" required [A-Za-z]{8}>
+            <input type="text" class="form-control" id="inputAddress" placeholder="" [A-Za-z]{8} required>
             </div>
         </div>
             
