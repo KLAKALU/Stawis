@@ -51,7 +51,9 @@ def register():
         print(new_user)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(redirect(url_for("main")))
+        # return 'User created successfully'
+        # ここにフラッシュメッセージを追加
+        return render_template('main.html')
     else:
         return render_template('register.html')
         # ------------------------------------------------------------------------
@@ -67,15 +69,18 @@ def login():
     
     if request.method == 'POST':
         username =  request.form.get("username")
-        email = request.form.get("email")
         password = request.form.get('password')
         # hash = generate_password_hash(password)
         # global status
         # Userテーブルからusernameに一致するユーザを取得
-        user = User.query.filter_by(email=email, username=username).first()
+        user = User.query.filter_by(username=username).first()
         if check_password_hash(user.password, password):
             login_user(user)
-            return redirect('/add')
+            return redirect('/main')
+        else:
+            print("error!")
+            # return 'User created successfully'
+            return render_template("login.html")
     else:
         return render_template("login.html")
 
