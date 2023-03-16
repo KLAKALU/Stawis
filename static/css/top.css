@@ -1,15 +1,14 @@
 
 .fixed { 
     display:none;
-    border-radius: 50%;
     position: fixed;
     bottom: 15px;
-    right: 25px;
+    right: 20px;
     padding: 10px 20px;
     z-index:999;
     background-color:white ;
     color:#0d6ff8 ;
-    font-size:30px;
+    font-size:20px;
     border-style:solid;
     border-color:#0d6ff8 ;
     }
@@ -31,6 +30,7 @@ header{
     position:relative;
     left:1.5%;
     width:104px;
+    pointer-events: none;
 }
 .t h3{
     font-size:32px;
@@ -47,8 +47,8 @@ header{
 }
 .has-sub{
     position:relative;
-    left:82.5%;
-    bottom:157px;
+    left:82.4%;
+    bottom:173px;
     display:block;
     width:130px;
 }
@@ -93,11 +93,13 @@ header{
     padding:20px 19px 20px 18px;
     bottom:88px;
     z-index:2;
+    cursor:pointer;
   }
   .sub2{
     padding:85px 38px 20px 38px;
     top:4px;
     z-index:1;
+    cursor:pointer;
   }
 .rog{
     position:relative;
@@ -153,6 +155,7 @@ header{
     position:relative;
     background-color: rgba(224,243,250,0.5);
     padding:20px;
+    pointer-events: none;
 }
 .button{
     position:absolute;
