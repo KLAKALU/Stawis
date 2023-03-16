@@ -3,7 +3,6 @@ from flask import render_template, request, redirect
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-import shutil,requests,bs4,codecs
 from scraping import scraping
 
 
@@ -108,23 +107,24 @@ def login():
         return render_template("login.html")
 
 
-import codecs 
+import codecs
 from scraping import scraping
 from script import *
 @app.route("/search", methods=["POST"])
 def search():
-    info=scraping(request.form.get("ISBN"))
-    if info == None:
-        script.al()
-    if info != None:
-        file = codecs.open("./templates/c.html",'w','utf-8','ignore')
-        s = '\xa0'
-        file.write(s)
-        file.write("<meta charset='utf-8'>")
-        file.write(info["title"])
-        file.write(info["writer"])
-        file.write(info["com"])
-        # file.write('<a href="' + info["price"] + '">購入はこちら</a>\n')
-        file.write('<img src="' + info["img_url"] + '">')
-        file.close()
-        return render_template('c.html')
+    if request.method == 'POST':
+        info=scraping(request.form.get("ISBN"))
+        if info == None:
+            script.al()
+        if info != None:
+            file = codecs.open("./templates/c.html",'w','utf-8','ignore')
+            s = '\xa0'
+            file.write(s)
+            file.write("<meta charset='utf-8'>")
+            file.write(info["title"])
+            file.write(info["writer"])
+            file.write(info["com"])
+            # file.write('<a href="' + info["price"] + '">購入はこちら</a>\n')
+            file.write('<img src="' + info["img_url"] + '">')
+            file.close()
+            return render_template('c.html')
