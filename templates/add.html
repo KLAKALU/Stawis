@@ -12,9 +12,11 @@
 <body>
     <div class="box">
         <form action="/search" method="POST" class="input_isbm">
-            <label for="formFile">isbn</label>
-            <input class="input_isbm" type="text" name="ISBN" step="1.0" max="120" min="0">
-            <input type="submit" class="btn" value="検索">
+            <div>
+                <label for="formFile">isbn</label>
+                <input class="input_isbm" type="text" name="ISBN" step="1.0" max="120" required>
+                <button type="submit" class="btn">検索</button>
+            </div>
         </form>
         <p>＊ハイフンはいりません</p>
     </div>
