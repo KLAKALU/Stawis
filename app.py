@@ -105,14 +105,21 @@ def add():
 # スクレイピング機能
 
 import codecs
+import tkinter as tk
+import tkinter.messagebox as messagebox
 from scraping import scraping
-from script import *
 @app.route("/search", methods=["POST"])
 def search():
     if request.method == 'POST':
         info=scraping(request.form.get("ISBN"))
         if info == None:
-            script.al()
+            root = tk.Tk()
+            root.attributes('-topmost', True)
+            root.withdraw()
+            root.lift()
+            root.focus_force()
+            messagebox.showinfo("メッセージ","存在しないISBNが入力されました")
+            return render_template("add.html")
         if info != None:
             file = codecs.open("./templates/c.html",'w','utf-8','ignore')
             s = '\xa0'

@@ -1,6 +1,8 @@
 <html>
     <head>
         <link rel="stylesheet" href="../static/css/top.css">
+        <link rel="stylesheet" href="../static/css/lightbox.min.css">
+        <script src="../static/js/lightbox-plus-jquery.min.js"></script>
         <script src="../static/js/jquery-3.6.3.min.js"></script>
         <script src="../static/js/top.js"></script>
         <title>Stawis</title>
@@ -24,6 +26,7 @@
 
     </header>
     <a class="fixed" onclick="scroll_top()">↑</a>
+    <!--<p class="ya">⇧</p>-->
     <img  class="sha" src="../static/img/top1.jpg">
     <body>
         <p class="catch">読書を管理しよう</p>
@@ -32,7 +35,7 @@
             <a class="sin" type="button" href="/register">新規登録</a>
         </div>
         <div class="tejun" id="towa">
-            <h1 class="tt">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Stawisとは&emsp;</h1>
+            <h1 class="tt">&emsp;&emsp;&emsp;Stawisとは</h1>
             <img  class="doku" src="../static/img/top2.jpg">
             <div class="ye">
                 <h3 class="kanri">読書管理システムです</h3>
@@ -40,11 +43,12 @@
             </div>
         </div>
         <div class="tejun2" id="toro">
-            <h1 class="tt2">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Stawis使い方&emsp;</h1>
+            <h1 class="tt2">&emsp;&emsp;&emsp;Stawis使い方</h1>
             <img class="doku2" src="../static/img/top3.jpg">
             <div class="ye2">
                 <h3 class="kanri2">簡単に登録できてすぐに使えます</h3>
                 <p>新規登録をし、ログインをしたら、これから読む本を追加するだけです。</p>
+                <a id="dir" href="../static/img/ex.png" class="dir" data-lightbox="abc" >詳しく</a>
             </div>
         </div>
     </body>
