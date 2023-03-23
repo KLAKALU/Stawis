@@ -8,7 +8,7 @@ window.addEventListener("scroll", function () {
   window.addEventListener("scroll", function () {
     const tejun = document.querySelector("#toro");
     const scroll = window.pageYOffset;
-    let k=(scroll-810)/(1250-810);
+    let k=(scroll-770)/(1180-770);
     tejun.style.opacity=k.toString();
   });
 
