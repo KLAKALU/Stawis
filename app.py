@@ -9,7 +9,7 @@ from scraping import scraping
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
 app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
 
@@ -24,6 +24,12 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+
+class books(UserMixin,db.Model):
+    isbn = db.Column(db.Integer, primary_key=True)
+    image_pass = db.Column(db.String(100), unique=True)
+    book_title = db.Column(db.String(100), unique=True)
+    bool_author = db.Column(db.String(100))
 
 if __name__ == '__main__':
     app.debug = True
@@ -66,7 +72,7 @@ def login():
     GET: loginページの表示
     POST: username, passwordの取得, sesion情報の登録
     """
-    
+
     if request.method == 'POST':
         username =  request.form.get("username")
         password = request.form.get('password')
@@ -91,7 +97,7 @@ def login():
 def logout():
     logout_user()
     return redirect("/")
-    
+
 # メイン画面
 
 @app.route("/main", methods=["GET"])
