@@ -1,0 +1,14 @@
+/*login.html*/
+.page-title{
+    position:relative;
+    left:40vw;
+    top:1.5vw;
+}
+body form{
+    position:relative;
+    top:4vw;
+}
+.col-7 button{
+    position:relative;
+    top:3vw;
+}

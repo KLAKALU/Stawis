@@ -1,74 +1,99 @@
-/*+ボタン*/
-.fixed { 
-    display:block;
-    border-radius: 50%;
-    position: fixed;
-    bottom: 17px;
-    right: 27px;
-    padding: 10px 20px;
-    z-index:999;
-    background-color:white ;
-    color:#0d6ff8 ;
-    font-size:30px;
-    border-style:solid;
-    border-color:#0d6ff8 ;
-    text-decoration: none;
-    }
-.fixed:hover{
-    background-color:#0d6ff8  ;
-    color:white;
+
+.ya{
+    font-size:6vw;
+    color:#d6e600;
+    position:relative;
+    bottom:41vw;
+    left:73vw;
+    transform: rotate( -45deg );
 }
 /*ヘッダ*/
 header{
-    background-color: #27acd9;
-    height:65px;
-    width:100%;
+    background-color:#27acd9;
+    height:3.5vw;
+    width:99vw;
     position:relative;
     z-index:10;
+    border-radius: 10px;
 }
 .t{
     color:black;
     position:relative;
-    left:20px;
-    width:104px;
+    left:1vw;
+    width:10vw;
+    pointer-events: none;
 }
 .t h3{
-    font-size:32px;
+    font-size:2.5vw;
     font-family: 'Caveat', cursive;
     position:relative;
-    bottom:4px;
+    bottom:0.3vw;
 }
-.t p{
-    font-size:13px;
-    font-family:"Yu Mincho";
-    position:relative;
-    bottom:35px;
-    border-top: 3px solid #333;
+/*追加ボタン*/
+.add{
+    width:10vw;
+    position:absolute;
+    left:79vw;
+    bottom:0.6vw;
+    display:block;
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
+    border-style:solid;
+    border-radius:10px;
+    border-color:white;
+    text-align:center;
+    font-size:1.25vw;
+}
+.add:hover{
+    color:#27acd9;
+    background-color:white;
 }
 /*ログアウト*/
 .rog{
-    position:relative;
-    left:581px;
-    bottom:113px;
-    width: 100px;
-    height:45px;
+    width:10vw;
+    position:absolute;
+    left:91vw;
+    bottom:0.7vw;
     display:block;
-	text-align: center;
 	text-decoration: none;
-	padding-top:20px;
-    margin: auto;
 	font-weight: bold;
-	background: black;
-	color: #fff;
+    color :white;
 	transition: 0.5s;
+    font-size:1.25vw;
 }
-.rog:hover {
-	color: black;
-	background: #fff;
+.rog:hover{
+    text-decoration:underline;
+}
+/*ユーザー名*/
+.name{
+    position:absolute;
+    top:2.3vw;
+    left:90.5vw;
+    background-color:#efedec;
+    width:8vw;
+    height:2vw;
+    text-align:center;
+    padding-top:0vw;
+    border-radius:5px;
+}
+/*ページ名*/
+.page{
+    position:relative;
+    bottom:2.2vw;
+    left:1vw;
+    font-size:1vw;
+    color:#97988b;
+}
+.dire{
+    text-decoration: underline;
+    color:#424338;
 }
 /*body*/
 .n{
     position:relative;
-    top:40%;
-    left:45%;
+    top:18vw;
+    left:45vw;
+    width:10vw;
+    font-size:1.1vw;
 }

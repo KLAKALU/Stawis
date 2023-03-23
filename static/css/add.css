@@ -1,72 +1,124 @@
+.ya{
+    font-size:6vw;
+    color:#d6e600;
+    position:relative;
+    bottom:18vw;
+    left:58vw;
+    transform: rotate( -45deg );
+    position:fixed;
+    z-index:999;
+}
 
 header{
-    background-color: #27acd9;
-    height:65px;
-    width:100%;
+    background-color:#27acd9;
+    height:3.5vw;
+    width:99vw;
     position:relative;
-    bottom:30px;
+    top:-2.3vw;
     z-index:10;
+    border-radius: 10px;
 }
 .t{
     color:black;
     position:relative;
-    left:20px;
-    width:104px;
+    left:1vw;
+    width:10vw;
+    pointer-events: none;
 }
 .t h3{
-    font-size:32px;
+    font-size:2.5vw;
     font-family: 'Caveat', cursive;
     position:relative;
-    bottom:4px;
+    bottom:0.3vw;
 }
-.t p{
-    font-size:13px;
-    font-family:"Yu Mincho";
-    position:relative;
-    bottom:35px;
-    border-top: 3px solid #333;
-}
-.rog{
-    position:relative;
-    left:581px;
-    bottom:113px;
-    width: 100px;
-    height:45px;
+/*追加ボタン*/
+.add{
+    width:10vw;
+    position:absolute;
+    left:79vw;
+    bottom:0.6vw;
     display:block;
-	text-align: center;
-	text-decoration: none;
-	padding-top:20px;
-    margin: auto;
-	font-weight: bold;
-	background: black;
-	color: #fff;
-	transition: 0.5s;
-}
-.rog:hover {
-	color: black;
-	background: #fff;
-}
-
-
-.box{
-/* 以下文字を真ん中に配置する要素 */
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    -webkit-transform : translate(-50%,-50%);
-    transform : translate(-50%,-50%);
-    background-color:white;
-    width:350px;
-    height:150px;
-    padding-top:85px;
-    padding-left:90px;
-    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
     border-style:solid;
+    border-radius:10px;
+    border-color:white;
+    text-align:center;
+    font-size:1.25vw;
+}
+.add:hover{
+    color:#27acd9;
+    background-color:white;
+}
+/*ログアウト*/
+.rog{
+    width:7vw;
+    position:absolute;
+    left:91vw;
+    bottom:0.7vw;
+    display:block;
+	text-decoration: none;
+	font-weight: bold;
+    color :white;
+	transition: 0.5s;
+    font-size:1.25vw;
+}
+.rog:hover{
+    text-decoration:underline;
+}
+/*ユーザー名*/
+.name{
+    position:absolute;
+    top:2.3vw;
+    left:90.5vw;
+    background-color:#efedec;
+    width:8vw;
+    height:2vw;
+    text-align:center;
+    padding-top:0vw;
+    border-radius:5px;
+}
+/*ページ名*/
+.page{
+    position:relative;
+    bottom:2.2vw;
+    left:1vw;
+    font-size:1vw;
+    color:#97988b;
+}
+.dire{
+    text-decoration: underline;
+    color:#424338;
+}
+.main{
+    color:#97988b;
+    text-decoration: none;
+}
+.cr{
+    position:relative;
+    bottom:10.5px;
+    left:48px;
+    font-size:0.3vw;
+}
+
+/* 以下文字を真ん中に配置する要素 */
+.box{
+    position: absolute;
+    top: 13vw;
+    left: 31vw;
+    width:28vw;
+    height:5vw;
+    padding-left:6vw;
+    padding-top:3vw;
+    padding-bottom:1vw;
+    border-radius:10px;
+    background-color:#d8d1cb;
 }
 
 .form-label{
     color: #1465bd;
-    
+    font-size:1.1vw;
 }
 
 p2{
@@ -75,19 +127,19 @@ p2{
 
 /*input欄のisbm,タグの間隔をあける*/
 label{
-    margin-left: 10px;
+    margin-left:1.2vw;
 }
 .input_tag{
-    margin-left: 17px;
+    margin-left: 2vw;
     position:relative;
-    right:7px;
+    right:1vw;
 }
 
 
 
 /* 確認botann */
 .btn{
-    font-size: 20;
+    font-size: 1vw;
     border-radius:5px;
     background-color: rgb(255, 255, 255);
     padding: 5px;
@@ -96,6 +148,7 @@ label{
     position:relative;
     left:10px;
     top:0px;
+    cursor:pointer;
     /* ボタン改良 */
    /*display: inline-block;
     text-decoration: none;
@@ -110,4 +163,3 @@ label{
     box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
     transform: translateY(2px);
 }
-
