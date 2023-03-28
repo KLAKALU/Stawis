@@ -31,6 +31,14 @@ class books(UserMixin,db.Model):
     book_title = db.Column(db.String(100), unique=True)
     bool_author = db.Column(db.String(100))
 
+class reviews(UserMixin,db.Model):
+    id = db.Colum(db.Integer, primary_key=True)
+    user_id = db.column(db.String(100),)
+    isbn = db.column(db.String(100),)
+    comment = db.column(db.String(100))
+    date = db.column(db.String(100),)
+    
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='127.0.0.1')
@@ -146,3 +154,9 @@ def search():
             file.write('<img src="' + info["img_url"] + '">')
             file.close()
             return render_template('c.html')
+
+# ポップアップ画面用のエンドポイント
+@app.route('/popup/<data>')
+def popup(data):
+    # 画面から送られてきたデータを表示するため、データも一緒に送信
+    return render_template('popup.html', data=data)
