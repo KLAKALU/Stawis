@@ -70,11 +70,6 @@ def register():
         return render_template('main.html')
     else:
         return render_template('register.html')
-<<<<<<< HEAD
-    
-
-=======
->>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
         # ------------------------------------------------------------------------
 
 #ログイン機能
@@ -103,11 +98,6 @@ def login():
     else:
         return render_template("login.html")
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
 #ログアウト機能
 
 @app.route("/logout")
@@ -167,10 +157,6 @@ def search():
             file.write('<img src="' + info["img_url"] + '">')
             file.close()
             return render_template('c.html')
-<<<<<<< HEAD
-        else:
-            return render_template("add.html")
-=======
 
 #本追加
 
@@ -179,4 +165,3 @@ def search():
 def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
->>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d

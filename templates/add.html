@@ -9,6 +9,9 @@
                 <input class="input_isbm" type="text" name="ISBN" step="1.0" max="120" required>
                 <button type="submit" class="btn">検索</button>
             </div>
+
+            {% comment %} 感想欄 {% endcomment %}
+            <textarea rows="10" cols="60">ここに記入してください</textarea>
         </form>
     <p class="cr">＊ハイフンはいりません</p>
     {% for message in get_flashed_message() %}
@@ -19,11 +22,4 @@
     </div>
 </body>
 {% blockend %}
-<!--作業ノート
-プラスボタンクリック後にaddに移動
-画面内でisbn,タグの取得。
-画面内確認ボタンクリック後
-確認用ポップアップ表示
 
-作業中JSで同じ関数を使ってエラーがでた
-btn.addEventListenerのbtnの部分　addに変更-->
