@@ -123,7 +123,22 @@ def main():
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    return render_template("add.html")
+    if request.method == 'POST':
+        file=open("isbn.txt")
+        search_isbn=file.read()
+        info=scraping(search_isbn)
+        add_book=books(
+        isbn=search_isbn,
+        image_pass=info["img_url"],
+        book_title=info["title"],
+        bool_author=info["writer"]
+        )
+        db.session.add(add_book)
+        db.session.commit()
+        flash("本が追加されました")
+        return render_template("main.html")
+    if request.method == 'GET':
+        return render_template("add.html")
 
 # スクレイピング機能
 
@@ -152,22 +167,6 @@ def search():
             return render_template('c.html')
 
 #本追加
-
-@app.route('/add',methods=['POST'])
-def add():
-    file=open("isbn.txt")
-    search_isbn=file.read()
-    info=scraping(search_isbn)
-    add_book=books(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-    )
-    db.session.add(add_book)
-    db.session.commit()
-    flash("本が追加されました")
-    return render_template("main.html")
 
 # ポップアップ画面用のエンドポイント
 @app.route('/popup/<data>')
