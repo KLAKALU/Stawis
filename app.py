@@ -33,7 +33,7 @@ class Book(UserMixin,db.Model):
     bool_author = db.Column(db.String(100))
 
 class Review(UserMixin,db.Model):
-    id = db.Colum(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     isbn = db.column(db.String(100),)
     comment = db.column(db.String(100))
