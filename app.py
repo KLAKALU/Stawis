@@ -24,16 +24,17 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    reviews = db.relationship('Review', backref='user', lazy=True)
 
-class books(UserMixin,db.Model):
+class Book(UserMixin,db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
     bool_author = db.Column(db.String(100))
 
-class reviews(UserMixin,db.Model):
-    id = db.Colum(db.Integer, primary_key=True)
-    user_id = db.column(db.String(100),)
+class Review(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     isbn = db.column(db.String(100),)
     comment = db.column(db.String(100))
     date = db.column(db.String(100),)
@@ -69,11 +70,12 @@ def register():
         return render_template('main.html')
     else:
         return render_template('register.html')
-        # ------------------------------------------------------------------------
+<<<<<<< HEAD
+    
 
-@app.route("/login", methods=["GET","POST"])
-def registers():
-    return render_template("login.html")
+=======
+>>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
+        # ------------------------------------------------------------------------
 
 #ログイン機能
 
@@ -100,11 +102,12 @@ def login():
             return render_template("login.html")
     else:
         return render_template("login.html")
-    
-@app.route('/register', methods=['GET','POST'])
-def logins():
-    return render_template("register.html")
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
 #ログアウト機能
 
 @app.route("/logout")
@@ -122,13 +125,28 @@ def main():
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    return render_template("add.html")
+    if request.method == 'POST':
+        file=open("isbn.txt")
+        search_isbn=file.read()
+        info=scraping(search_isbn)
+        add_book=books(
+        isbn=search_isbn,
+        image_pass=info["img_url"],
+        book_title=info["title"],
+        bool_author=info["writer"]
+        )
+        db.session.add(add_book)
+        db.session.commit()
+        flash("本が追加されました")
+        return render_template("main.html")
+    if request.method == 'GET':
+        return render_template("add.html")
 
 # スクレイピング機能
 
 import codecs
 from scraping import scraping
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
         info=scraping(request.form.get("ISBN"))
@@ -149,27 +167,16 @@ def search():
             file.write('<img src="' + info["img_url"] + '">')
             file.close()
             return render_template('c.html')
+<<<<<<< HEAD
+        else:
+            return render_template("add.html")
+=======
 
 #本追加
-
-@app.route('/add',methods=['POST'])
-def add():
-    file=open("isbn.txt")
-    search_isbn=file.read()
-    info=scraping(search_isbn)
-    add_book=books(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-    )
-    db.session.add(add_book)
-    db.session.commit()
-    flash("本が追加されました")
-    return render_template("main.html")
 
 # ポップアップ画面用のエンドポイント
 @app.route('/popup/<data>')
 def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
+>>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
