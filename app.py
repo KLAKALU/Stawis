@@ -111,20 +111,13 @@ def add():
 # スクレイピング機能
 
 import codecs
-import tkinter as tk
-import tkinter.messagebox as messagebox
 from scraping import scraping
 @app.route("/search", methods=["POST"])
 def search():
     if request.method == 'POST':
         info=scraping(request.form.get("ISBN"))
         if info == None:
-            root = tk.Tk()
-            root.attributes('-topmost', True)
-            root.withdraw()
-            root.lift()
-            root.focus_force()
-            messagebox.showinfo("メッセージ","存在しないISBNが入力されました")
+            flash('存在しないISBNが入力されました')
             return render_template("add.html")
         if info != None:
             file = codecs.open("./templates/c.html",'w','utf-8','ignore')
@@ -134,7 +127,18 @@ def search():
             file.write(info["title"])
             file.write(info["writer"])
             file.write(info["com"])
-            # file.write('<a href="' + info["price"] + '">購入はこちら</a>\n')
             file.write('<img src="' + info["img_url"] + '">')
             file.close()
+            txt_file=codecs.open("isbn.txt","w",'utf-8','ignore')
+            txt_file.write(request.form.get("ISBN"))
+            txt_file.close()
             return render_template('c.html')
+
+#本追加
+
+@app.route('/add',methods=['POST'])
+def add():
+    info=scraping(request.form.get("ISBN"))
+    add_book=books(
+        isbn=request.form.get["ISBN"]
+    )
