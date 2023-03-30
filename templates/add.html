@@ -1,23 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/add.css">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STAWIS</title>
-</head>
-<!--<p class="ya">⇧</p>-->
-<header>
-    <div class="t">
-        <h3>Stawis</h3>
-    </div>
-    <a class="rog" type="button" href="/logout">ログアウト</a>
-    <p class="name">ユーザー名</p>
-    <p class="page"><span class="dire">検索画面</span></p>
-</header>
-
+{% extends 'layout.html' %}
+{% blockbody}
 <body>
+    <p class="page_name">検索画面</p>
     <div class="box">
         <form action="/search" method="POST" class="input_isbm">
             <div>
@@ -27,9 +11,14 @@
             </div>
         </form>
     <p class="cr">＊ハイフンはいりません</p>
+    {% for message in get_flashed_message() %}
+    <div>
+        {{message}}
+    </div>
+    {% endfor %}
     </div>
 </body>
-</html>
+{% blockend %}
 <!--作業ノート
 プラスボタンクリック後にaddに移動
 画面内でisbn,タグの取得。
