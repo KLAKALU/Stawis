@@ -148,7 +148,6 @@ def search():
             file.write(info["writer"])
             #file.write(info["com"])
             file.write('<img src="' + info["img_url"] + '">')
-            file.write('<button href="/add">この本を追加する</button>')
             file.close()
             return render_template('c.html')
 
