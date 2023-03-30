@@ -63,9 +63,7 @@ def register():
     else:
         return render_template('register.html')
     
-@app.route("/login", methods=["GET","POST"])
-def registers():
-    return render_template("login.html")
+
         # ------------------------------------------------------------------------
 
 #ログイン機能
@@ -94,9 +92,7 @@ def login():
     else:
         return render_template("login.html")
 
-@app.route('/register', methods=['GET','POST'])
-def logins():
-    return render_template("register.html")
+
 
 #ログアウト機能
 
@@ -122,7 +118,7 @@ import codecs
 import tkinter as tk
 import tkinter.messagebox as messagebox
 from scraping import scraping
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
         info=scraping(request.form.get("ISBN"))
@@ -146,3 +142,5 @@ def search():
             file.write('<img src="' + info["img_url"] + '">')
             file.close()
             return render_template('c.html')
+        else:
+            return render_template("add.html")
