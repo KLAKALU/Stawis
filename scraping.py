@@ -7,7 +7,7 @@ def scraping(isbn):
     soup_=bs4.BeautifulSoup(open_.content,"html.parser")
     title=soup_.select('h3[itemprop="name"]')
     writer=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
-    com=soup_.select('div[class="infobox ml10 mt10"] > ul > li > a')
+    #com=soup_.select('div[class="infobox ml10 mt10"] > ul > li > a')
     price=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
     soup_img = bs4.BeautifulSoup(requests.get(url).content, 'lxml')
     src=[]
@@ -34,7 +34,7 @@ def scraping(isbn):
         info = {}
         info["title"] = title[0].getText()
         info["writer"] = writer[0].getText()
-        info["com"] = com[1].getText()
+        #info["com"] = com[1].getText()
         info["price"] = price[2].getText()
         info["img_url"] = img_url
         return info
