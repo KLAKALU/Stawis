@@ -24,12 +24,20 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    reviews = db.relationship('Review', backref='user', lazy=True)
 
-class books(UserMixin,db.Model):
+class Book(UserMixin,db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
     bool_author = db.Column(db.String(100))
+
+class Review(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    isbn = db.column(db.String(100),)
+    comment = db.column(db.String(100))
+    date = db.column(db.String(100),)
 
 if __name__ == '__main__':
     app.debug = True
@@ -62,8 +70,11 @@ def register():
         return render_template('main.html')
     else:
         return render_template('register.html')
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
         # ------------------------------------------------------------------------
 
 #ログイン機能
@@ -92,8 +103,11 @@ def login():
     else:
         return render_template("login.html")
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
 #ログアウト機能
 
 @app.route("/logout")
@@ -106,41 +120,63 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    return render_template('main.html')
+    add_entries=books.query.order_by(books.id.desc()).all()
+    return render_template('main.html',entries=add_entries)
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    return render_template("add.html")
+    if request.method == 'POST':
+        file=open("isbn.txt")
+        search_isbn=file.read()
+        info=scraping(search_isbn)
+        add_book=books(
+        isbn=search_isbn,
+        image_pass=info["img_url"],
+        book_title=info["title"],
+        bool_author=info["writer"]
+        )
+        db.session.add(add_book)
+        db.session.commit()
+        flash("本が追加されました")
+        return render_template("main.html")
+    if request.method == 'GET':
+        return render_template("add.html")
 
 # スクレイピング機能
 
 import codecs
-import tkinter as tk
-import tkinter.messagebox as messagebox
 from scraping import scraping
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
         info=scraping(request.form.get("ISBN"))
         if info == None:
-            root = tk.Tk()
-            root.attributes('-topmost', True)
-            root.withdraw()
-            root.lift()
-            root.focus_force()
-            messagebox.showinfo("メッセージ","存在しないISBNが入力されました")
+            flash('存在しないISBNが入力されました')
             return render_template("add.html")
         if info != None:
+            txt_file=codecs.open("isbn.txt","w")
+            txt_file.write(request.form.get("ISBN"))
+            txt_file.close()
             file = codecs.open("./templates/c.html",'w','utf-8','ignore')
             s = '\xa0'
             file.write(s)
             file.write("<meta charset='utf-8'>")
             file.write(info["title"])
             file.write(info["writer"])
-            file.write(info["com"])
-            # file.write('<a href="' + info["price"] + '">購入はこちら</a>\n')
+            #file.write(info["com"])
             file.write('<img src="' + info["img_url"] + '">')
             file.close()
             return render_template('c.html')
+<<<<<<< HEAD
         else:
             return render_template("add.html")
+=======
+
+#本追加
+
+# ポップアップ画面用のエンドポイント
+@app.route('/popup/<data>')
+def popup(data):
+    # 画面から送られてきたデータを表示するため、データも一緒に送信
+    return render_template('popup.html', data=data)
+>>>>>>> 3e6dc01378e9af7ed4503f7f5f8f80173947df2d
