@@ -24,16 +24,17 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    reviews = db.relationship('Review', backref='user', lazy=True)
 
-class books(UserMixin,db.Model):
+class Book(UserMixin,db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
     bool_author = db.Column(db.String(100))
 
-class reviews(UserMixin,db.Model):
+class Review(UserMixin,db.Model):
     id = db.Colum(db.Integer, primary_key=True)
-    user_id = db.column(db.String(100),)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     isbn = db.column(db.String(100),)
     comment = db.column(db.String(100))
     date = db.column(db.String(100),)
