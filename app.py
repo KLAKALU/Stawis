@@ -31,6 +31,13 @@ class books(UserMixin,db.Model):
     book_title = db.Column(db.String(100), unique=True)
     bool_author = db.Column(db.String(100))
 
+class reviews(UserMixin,db.Model):
+    id = db.Colum(db.Integer, primary_key=True)
+    user_id = db.column(db.String(100),)
+    isbn = db.column(db.String(100),)
+    comment = db.column(db.String(100))
+    date = db.column(db.String(100),)
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='127.0.0.1')
@@ -64,6 +71,10 @@ def register():
         return render_template('register.html')
         # ------------------------------------------------------------------------
 
+@app.route("/login", methods=["GET","POST"])
+def registers():
+    return render_template("login.html")
+
 #ログイン機能
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -89,6 +100,10 @@ def login():
             return render_template("login.html")
     else:
         return render_template("login.html")
+    
+@app.route('/register', methods=['GET','POST'])
+def logins():
+    return render_template("register.html")
 
 #ログアウト機能
 
@@ -102,7 +117,8 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    return render_template('main.html')
+    add_entries=books.query.order_by(books.id.desc()).all()
+    return render_template('main.html',entries=add_entries)
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -120,25 +136,41 @@ def search():
             flash('存在しないISBNが入力されました')
             return render_template("add.html")
         if info != None:
+            txt_file=codecs.open("isbn.txt","w")
+            txt_file.write(request.form.get("ISBN"))
+            txt_file.close()
             file = codecs.open("./templates/c.html",'w','utf-8','ignore')
             s = '\xa0'
             file.write(s)
             file.write("<meta charset='utf-8'>")
             file.write(info["title"])
             file.write(info["writer"])
-            file.write(info["com"])
+            #file.write(info["com"])
             file.write('<img src="' + info["img_url"] + '">')
+            file.write('<button href="/add">この本を追加する</button>')
             file.close()
-            txt_file=codecs.open("isbn.txt","w",'utf-8','ignore')
-            txt_file.write(request.form.get("ISBN"))
-            txt_file.close()
             return render_template('c.html')
 
 #本追加
 
 @app.route('/add',methods=['POST'])
 def add():
-    info=scraping(request.form.get("ISBN"))
+    file=open("isbn.txt")
+    search_isbn=file.read()
+    info=scraping(search_isbn)
     add_book=books(
-        isbn=request.form.get["ISBN"]
+        isbn=search_isbn,
+        image_pass=info["img_url"],
+        book_title=info["title"],
+        bool_author=info["writer"]
     )
+    db.session.add(add_book)
+    db.session.commit()
+    flash("本が追加されました")
+    return render_template("main.html")
+
+# ポップアップ画面用のエンドポイント
+@app.route('/popup/<data>')
+def popup(data):
+    # 画面から送られてきたデータを表示するため、データも一緒に送信
+    return render_template('popup.html', data=data)
