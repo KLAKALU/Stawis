@@ -1,0 +1,116 @@
+/*layout*/
+header{
+    background-color:#27acd9;
+    height:3.5vw;
+    width:99vw;
+    position:relative;
+    top:-0.4vw;
+    z-index:10;
+    border-radius: 10px;
+}
+.logo{
+    color:black;
+    position:relative;
+    left:1vw;
+    width:10vw;
+    pointer-events: none;
+}
+.logo h3{
+    font-size:2.5vw;
+    font-family: 'Caveat', cursive;
+    position:relative;
+    bottom:0.3vw;
+}
+.logout_button{
+    width:7vw;
+    position:absolute;
+    left:91vw;
+    bottom:0.7vw;
+    display:block;
+	text-decoration: none;
+	font-weight: bold;
+    color :white;
+	transition: 0.5s;
+    font-size:1.25vw;
+}
+.logout_button:hover{
+    text-decoration:underline;
+}
+.username{
+    position:absolute;
+    top:2.3vw;
+    left:90.5vw;
+    background-color:#efedec;
+    width:8vw;
+    height:2vw;
+    text-align:center;
+    padding-top:0vw;
+    border-radius:5px;
+}
+
+/*add_button*/
+.add_button{
+    width:10vw;
+    position:absolute;
+    left:79.5vw;
+    bottom:43.9vw;
+    display:block;
+    font-weight: bold;
+    text-decoration: none;
+    color:white;
+    border-style:solid;
+    border-radius:10px;
+    border-color:white;
+    text-align:center;
+    font-size:1.25vw;
+    background-color:#27acd9;
+    z-index:99;
+}
+.add_button:hover{
+    color:#27acd9;
+    background-color:white;
+}
+
+/*body*/
+.page_name{
+    position:relative;
+    bottom:3.2vw;
+    left:1vw;
+    font-size:1vw;
+    text-decoration: underline;
+    color:#424338;
+}
+/*検索*/
+.box{
+    position: absolute;
+    top: 13vw;
+    left: 31vw;
+    width:28vw;
+    height:5vw;
+    padding-left:6vw;
+    padding-top:3vw;
+    padding-bottom:1vw;
+    border-radius:10px;
+    background-color:#d8d1cb;
+}
+.cr{
+    position:relative;
+    bottom:10.5px;
+    left:48px;
+    font-size:0.3vw;
+}
+.form-label{
+    color: #1465bd;
+    font-size:1.1vw;
+}
+p2{
+    color:#1465bd;
+}
+label{
+    margin-left:1.2vw;
+}
+.input_tag{
+    margin-left: 2vw;
+    position:relative;
+    right:1vw;
+}
