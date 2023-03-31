@@ -117,12 +117,19 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    add_entries=books.query.order_by(books.id.desc()).all()
-    return render_template('main.html',entries=add_entries)
+    books_entries = books.query.all()
+    main_entry = []
+    for book_entry in books_entries:
+        username = User.query.filter_by(id=book_entry.user_id).first().username
+        main_entry.append({'username': username, 'book': book_entry.book_title})
+    return render_template('main.html',entries=main_entry)
+
+#add画面
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    return render_template("add.html")
+    add_entry=User.query.all()
+    return render_template("add.html",entries=add_entry)
 
 # スクレイピング機能
 
