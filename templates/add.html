@@ -2,6 +2,9 @@
 {% blockbody}
 <body>
     <p class="page_name">検索画面</p>
+    {% for entry in entries %}
+        <p class="username">{{ entry.username }}</p>
+    {% endfor %}
     <div class="box">
         <form action="/search" method="POST" class="input_isbm">
             <div>
