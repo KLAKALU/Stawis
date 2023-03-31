@@ -24,16 +24,17 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    reviews = db.relationship('Review', backref='user', lazy=True)
 
-class books(UserMixin,db.Model):
+class Book(UserMixin,db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
     bool_author = db.Column(db.String(100))
 
-class reviews(UserMixin,db.Model):
-    id = db.Colum(db.Integer, primary_key=True)
-    user_id = db.column(db.String(100),)
+class Review(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     isbn = db.column(db.String(100),)
     comment = db.column(db.String(100))
     date = db.column(db.String(100),)
@@ -71,10 +72,6 @@ def register():
         return render_template('register.html')
         # ------------------------------------------------------------------------
 
-@app.route("/login", methods=["GET","POST"])
-def registers():
-    return render_template("login.html")
-
 #ログイン機能
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -100,10 +97,6 @@ def login():
             return render_template("login.html")
     else:
         return render_template("login.html")
-    
-@app.route('/register', methods=['GET','POST'])
-def logins():
-    return render_template("register.html")
 
 #ログアウト機能
 
@@ -117,7 +110,7 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    books_entries = books.query.all()
+    books_entries = Book.query.all()
     main_entry = []
     for book_entry in books_entries:
         username = User.query.filter_by(id=book_entry.user_id).first().username
@@ -129,13 +122,28 @@ def main():
 @app.route("/add", methods=["GET", "POST"])
 def add():
     add_entry=User.query.all()
-    return render_template("add.html",entries=add_entry)
+    if request.method == 'POST':
+        file=open("isbn.txt")
+        search_isbn=file.read()
+        info=scraping(search_isbn)
+        add_book=Book(
+        isbn=search_isbn,
+        image_pass=info["img_url"],
+        book_title=info["title"],
+        bool_author=info["writer"]
+        )
+        db.session.add(add_book)
+        db.session.commit()
+        flash("本が追加されました")
+        return render_template("main.html")
+    if request.method == 'GET':
+        return render_template("add.html",entries=add_entry)
 
 # スクレイピング機能
 
 import codecs
 from scraping import scraping
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
         info=scraping(request.form.get("ISBN"))
@@ -158,22 +166,6 @@ def search():
             return render_template('c.html')
 
 #本追加
-
-@app.route('/add',methods=['POST'])
-def add():
-    file=open("isbn.txt")
-    search_isbn=file.read()
-    info=scraping(search_isbn)
-    add_book=books(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-    )
-    db.session.add(add_book)
-    db.session.commit()
-    flash("本が追加されました")
-    return render_template("main.html")
 
 # ポップアップ画面用のエンドポイント
 @app.route('/popup/<data>')
