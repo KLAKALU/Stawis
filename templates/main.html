@@ -4,6 +4,9 @@
 <body>
     <p class="page_name">メイン画面</p>
     {% for entry in entries %}
+        <p class="username">{{ entry.username }}</p>
+    {% endfor %}
+    {% for entry in entries %}
         <div>
             <ul>
                 <li><img src="{{ entry.image_pass }}"></li>
