@@ -111,6 +111,7 @@ def logout():
 @app.route("/main", methods=["GET"])
 def main():
     books_entries = Book.query.all()
+    review_entries=Review.query.all()
     main_entry = []
     for book_entry in books_entries:
         username = User.query.filter_by(id=book_entry.user_id).first().username
@@ -165,10 +166,26 @@ def search():
             file.close()
             return render_template('c.html')
 
-#本追加
-
 # ポップアップ画面用のエンドポイント
 @app.route('/popup/<data>')
 def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
+
+#本追加処理
+
+@app.route('/add',methods=['POST'])
+def add():
+    file=open("isbn.txt")
+    search_isbn=file.read()
+    info=scraping(search_isbn)
+    add_book=Book(
+        isbn=search_isbn,
+        image_pass=info["img_url"],
+        book_title=info["title"],
+        bool_author=info["writer"]
+    )
+    db.session.add(add_book)
+    db.session.commit()
+    flash("本が追加されました")
+    return render_template("main.html")
