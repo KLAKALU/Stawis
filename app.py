@@ -84,7 +84,6 @@ def login():
     if request.method == 'POST':
         username =  request.form.get("username")
         password = request.form.get('password')
-        # hash = generate_password_hash(password)
         # global status
         # Userテーブルからusernameに一致するユーザを取得
         user = User.query.filter_by(username=username).first()
@@ -93,7 +92,6 @@ def login():
             return redirect('/main')
         else:
             print("error!")
-            # return 'User created successfully'
             return render_template("login.html")
     else:
         return render_template("login.html")
