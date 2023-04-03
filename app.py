@@ -173,19 +173,3 @@ def popup(data):
     return render_template('popup.html', data=data)
 
 #本追加処理
-
-@app.route('/add',methods=['POST'])
-def add():
-    file=open("isbn.txt")
-    search_isbn=file.read()
-    info=scraping(search_isbn)
-    add_book=Book(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-    )
-    db.session.add(add_book)
-    db.session.commit()
-    flash("本が追加されました")
-    return render_template("main.html")
