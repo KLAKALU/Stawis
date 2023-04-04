@@ -165,9 +165,8 @@ def search():
             return render_template('c.html')
 
 # ポップアップ画面用のエンドポイント
+
 @app.route('/popup/<data>')
 def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
-
-#本追加処理
