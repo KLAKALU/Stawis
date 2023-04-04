@@ -34,10 +34,10 @@ class Book(UserMixin,db.Model):
 
 class Review(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    isbn = db.column(db.String(100),)
-    comment = db.column(db.String(100))
-    date = db.column(db.String(100),)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    isbn = db.column(db.Integer)
+    comment = db.column(db.Text)
+    date = db.column(db.Integer)
 
 if __name__ == '__main__':
     app.debug = True
