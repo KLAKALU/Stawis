@@ -1,8 +1,7 @@
 /*login.html*/
 .page-title{
-    position:relative;
-    left:40vw;
-    top:1.5vw;
+    text-align: center;
+    top:1.5em;
 }
 body form{
     position:relative;
