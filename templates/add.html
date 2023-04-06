@@ -2,15 +2,14 @@
 {% block content %}
 <body>
     <p class="page_name">検索画面</p>
-    <p>ユーザ名：{{current_user.username}}</p>
     <div class="box">
         <form action="/search" method="POST" class="input_isbm">
             <div>
                 <label for="formFile">isbn</label>
-                <input class="input_isbm" type="text" name="ISBN" step="1.0" max="120" required>
-                <button type="submit" class="btn">検索</button>
+                <input class="input_isbm" type="text" name="ISBN" step="1.0" placeholder="" [0-9]{12} requiredrequired>
+                <textarea rows="10" cols="60">ここに記入してください</textarea>
+                <button type="submit" class="btn">追加</button>
             </div>
-            <textarea rows="10" cols="60">ここに記入してください</textarea>
         </form>
     <p class="cr">＊ハイフンはいりません</p>
     </div>

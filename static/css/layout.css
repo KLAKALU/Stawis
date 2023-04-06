@@ -22,8 +22,8 @@ header{
     bottom:0.3vw;
 }
 .logout_button{
-    width:7vw;
     position:absolute;
+    width:7vw;
     left:91vw;
     bottom:0.7vw;
     display:block;
@@ -38,14 +38,11 @@ header{
 }
 .username{
     position:absolute;
-    top:2.3vw;
-    left:90.5vw;
-    background-color:#efedec;
     width:8vw;
-    height:2vw;
-    text-align:center;
+    left:80vw;
+    bottom:0.7vw;
+    color :white;
     padding-top:0vw;
-    border-radius:5px;
 }
 
 /*add_button*/
