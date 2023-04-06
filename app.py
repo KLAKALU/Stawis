@@ -34,10 +34,10 @@ class Book(UserMixin,db.Model):
 
 class Review(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    isbn = db.column(db.String(100),)
-    comment = db.column(db.String(100))
-    date = db.column(db.String(100),)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    isbn = db.column(db.Integer)
+    comment = db.column(db.Text)
+    date = db.column(db.Integer)
 
 if __name__ == '__main__':
     app.debug = True
@@ -116,10 +116,18 @@ def main():
 
 #add画面
 
+import codecs
+from scraping import scraping
 @app.route("/add", methods=["GET", "POST"])
 def add():
     add_entry=User.query.all()
     if request.method == 'POST':
+        info=scraping(request.form.get("ISBN"))
+        if info == None:
+            flash('存在しないISBNが入力されました')
+            return render_template("add.html")
+        if info != None:
+            print("foo")
         file=open("isbn.txt")
         search_isbn=file.read()
         info=scraping(search_isbn)
@@ -138,8 +146,6 @@ def add():
 
 # スクレイピング機能
 
-import codecs
-from scraping import scraping
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
@@ -163,9 +169,8 @@ def search():
             return render_template('c.html')
 
 # ポップアップ画面用のエンドポイント
+
 @app.route('/popup/<data>')
 def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
-
-#本追加処理
