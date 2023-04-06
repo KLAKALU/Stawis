@@ -34,10 +34,10 @@ class Book(UserMixin,db.Model):
 
 class Review(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    isbn = db.column(db.String(100),)
-    comment = db.column(db.String(100))
-    date = db.column(db.String(100),)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    isbn = db.column(db.Integer)
+    comment = db.column(db.Text)
+    date = db.column(db.Integer)
 
 if __name__ == '__main__':
     app.debug = True
@@ -108,40 +108,40 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    books_entries = Book.query.all()
-    review_entries=Review.query.all()
     main_entry = []
-    for book_entry in books_entries:
-        username = User.query.filter_by(id=book_entry.user_id).first().username
-        main_entry.append({'username': username, 'book': book_entry.book_title})
+    main_entry["book"]=Book.query.all()
+    main_entry["user"]=User.query.all()
+    main_entry["review"]=Review.query.all()
     return render_template('main.html',entries=main_entry)
 
 #add画面
 
+import codecs
+from scraping import scraping
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    add_entry=User.query.all()
+    isbn = request.form.get("ISBN")
     if request.method == 'POST':
-        file=open("isbn.txt")
-        search_isbn=file.read()
-        info=scraping(search_isbn)
-        add_book=Book(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-        )
-        db.session.add(add_book)
-        db.session.commit()
-        flash("本が追加されました")
-        return render_template("main.html")
-    if request.method == 'GET':
-        return render_template("add.html",entries=add_entry)
+        info=scraping(isbn)
+        if info == None:
+            flash('情報を取得することができませんでした。')
+            return render_template("add.html")
+        if info != None:
+            add_book=Book(
+            isbn=isbn,
+            image_pass=info["img_url"],
+            book_title=info["title"],
+            bool_author=info["writer"]
+            )
+            db.session.add(add_book)
+            db.session.commit()
+            flash("本が追加されました")
+            return render_template("main.html")
+    elif request.method == 'GET':
+        return render_template("add.html")
 
 # スクレイピング機能
 
-import codecs
-from scraping import scraping
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
