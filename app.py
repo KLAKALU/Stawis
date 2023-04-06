@@ -122,29 +122,25 @@ import codecs
 from scraping import scraping
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    add_entry=User.query.all()
+    isbn = request.form.get("ISBN")
     if request.method == 'POST':
-        info=scraping(request.form.get("ISBN"))
+        info=scraping(isbn)
         if info == None:
-            flash('存在しないISBNが入力されました')
+            flash('情報を取得することができませんでした。')
             return render_template("add.html")
         if info != None:
-            print("foo")
-        file=open("isbn.txt")
-        search_isbn=file.read()
-        info=scraping(search_isbn)
-        add_book=Book(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-        )
-        db.session.add(add_book)
-        db.session.commit()
-        flash("本が追加されました")
-        return render_template("main.html")
-    if request.method == 'GET':
-        return render_template("add.html",entries=add_entry)
+            add_book=Book(
+            isbn=isbn,
+            image_pass=info["img_url"],
+            book_title=info["title"],
+            bool_author=info["writer"]
+            )
+            db.session.add(add_book)
+            db.session.commit()
+            flash("本が追加されました")
+            return render_template("main.html")
+    elif request.method == 'GET':
+        return render_template("add.html")
 
 # スクレイピング機能
 
