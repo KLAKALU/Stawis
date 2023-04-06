@@ -118,10 +118,18 @@ def main():
 
 #add画面
 
+import codecs
+from scraping import scraping
 @app.route("/add", methods=["GET", "POST"])
 def add():
     add_entry=User.query.all()
     if request.method == 'POST':
+        info=scraping(request.form.get("ISBN"))
+        if info == None:
+            flash('存在しないISBNが入力されました')
+            return render_template("add.html")
+        if info != None:
+            print("foo")
         file=open("isbn.txt")
         search_isbn=file.read()
         info=scraping(search_isbn)
@@ -140,8 +148,6 @@ def add():
 
 # スクレイピング機能
 
-import codecs
-from scraping import scraping
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == 'POST':
