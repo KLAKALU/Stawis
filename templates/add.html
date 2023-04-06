@@ -13,12 +13,5 @@
             <textarea rows="10" cols="60">ここに記入してください</textarea>
         </form>
     <p class="cr">＊ハイフンはいりません</p>
-    {% for message in get_flashed_message() %}
-    <div>
-        {{message}}
-    </div>
-    {% endfor %}
     </div>
 </body>
-{% endblock %}
-
