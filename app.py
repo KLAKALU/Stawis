@@ -108,12 +108,10 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    books_entries = Book.query.all()
-    review_entries=Review.query.all()
     main_entry = []
-    for book_entry in books_entries:
-        username = User.query.filter_by(id=book_entry.user_id).first().username
-        main_entry.append({'username': username, 'book': book_entry.book_title})
+    main_entry["book"]=Book.query.all()
+    main_entry["user"]=User.query.all()
+    main_entry["review"]=Review.query.all()
     return render_template('main.html',entries=main_entry)
 
 #add画面
