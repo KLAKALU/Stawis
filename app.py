@@ -140,30 +140,6 @@ def add():
     elif request.method == 'GET':
         return render_template("add.html")
 
-# スクレイピング機能
-
-@app.route("/search", methods=["GET", "POST"])
-def search():
-    if request.method == 'POST':
-        info=scraping(request.form.get("ISBN"))
-        if info == None:
-            flash('存在しないISBNが入力されました')
-            return render_template("add.html")
-        if info != None:
-            txt_file=codecs.open("isbn.txt","w")
-            txt_file.write(request.form.get("ISBN"))
-            txt_file.close()
-            file = codecs.open("./templates/c.html",'w','utf-8','ignore')
-            s = '\xa0'
-            file.write(s)
-            file.write("<meta charset='utf-8'>")
-            file.write(info["title"])
-            file.write(info["writer"])
-            #file.write(info["com"])
-            file.write('<img src="' + info["img_url"] + '">')
-            file.close()
-            return render_template('c.html')
-
 # ポップアップ画面用のエンドポイント
 
 @app.route('/popup/<data>')
