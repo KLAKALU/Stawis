@@ -17,26 +17,15 @@
     </div>
     <form class="row g-3" action="/login" method="POST">
         <div class="col-7 align-self-center">
-            <div class="col-7 offset-7">
-            <div class="col-7">
             <label for="inputEmail4" class="form-label">Username</label>
             <input type="username" name="username"class="form-control" id="inputEmail4" required>
-            </div>
-            </div>
         </div>
         <div class="col-7 align-self-center">
-            <div class="col-6 offset-7">
             <label for="inputAddress" class="form-label">Password</label>
-            <input type="text" name="password"class="form-control" id="inputAddress" placeholder="" required [A-Za-z]{8}>
-            </div>
+            <input type="text" name="password"class="form-control">
         </div>
-        <div class="col-7">
-            <div class="col-6 offset-7">
-                <button type="submit" class="btn btn-primary" href="/login">ログイン</button>
-                <div class="col-7 offset-9">
-                    <a type="button" class="btn btn-outline-danger" href="/register">新規登録はこちらから</a>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary" href="/login">ログイン</button>    
+            <a type="button" class="btn btn-outline-danger" href="/register">新規登録はこちらから</a>
         </div>
     </form>
 
