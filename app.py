@@ -110,14 +110,10 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    if not session.get('logged_in'):
-        return redirect('/login')
-    else:
-        main_entry = []
-        main_entry["book"]=Book.query.all()
-        main_entry["user"]=User.query.all()
-        main_entry["review"]=Review.query.all()
-        return render_template('main.html',entries=main_entry)
+    book = []
+    book["book"]=Book.query.all()
+    book["user"]=User.query.all()
+    return render_template('main.html',entries=book)
 
 #add画面
 
@@ -126,6 +122,7 @@ from scraping import scraping
 @app.route("/add", methods=["GET", "POST"])
 def add():
     isbn = request.form.get("ISBN")
+    review=request.form.get("review")
     if request.method == 'POST':
         info=scraping(isbn)
         if info == None:
@@ -139,35 +136,15 @@ def add():
             bool_author=info["writer"]
             )
             db.session.add(add_book)
+            add_reviews=Review(
+            comment=review
+            )
+            db.session.add(add_reviews)
             db.session.commit()
             flash("本が追加されました")
-            return render_template("main.html")
+            return redirect(url_for('main'))
     elif request.method == 'GET':
         return render_template("add.html")
-
-# スクレイピング機能
-
-@app.route("/search", methods=["GET", "POST"])
-def search():
-    if request.method == 'POST':
-        info=scraping(request.form.get("ISBN"))
-        if info == None:
-            flash('存在しないISBNが入力されました')
-            return render_template("add.html")
-        if info != None:
-            txt_file=codecs.open("isbn.txt","w")
-            txt_file.write(request.form.get("ISBN"))
-            txt_file.close()
-            file = codecs.open("./templates/c.html",'w','utf-8','ignore')
-            s = '\xa0'
-            file.write(s)
-            file.write("<meta charset='utf-8'>")
-            file.write(info["title"])
-            file.write(info["writer"])
-            #file.write(info["com"])
-            file.write('<img src="' + info["img_url"] + '">')
-            file.close()
-            return render_template('c.html')
 
 # ポップアップ画面用のエンドポイント
 
