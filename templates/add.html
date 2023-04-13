@@ -2,24 +2,20 @@
 {% block content %}
 <body>
     <p class="page_name">検索画面</p>
-    <div class="box">
-        <form action="/search" method="POST" class="input_isbm">
-            <div>
-                <label for="formFile">isbn</label>
-                <input class="input_isbm" type="text" name="ISBN" step="1.0" max="120" required>
-                <button type="submit" class="btn">検索</button>
-        </from>    
-            </div>
-            <form method=”get” action=”“>
-            <textarea  rows="10" cols="60">ここに記入してください</textarea>
-            <div class="btn">
-                <button type="submit">完了</button>
-            </div>    
-            </form>
-    <p class="cr">＊ハイフンはいりません</p>
     {% for message in get_flashed_messages() %}
         {{ message }}
     {% endfor %}
+    <div class="box">
+        <form action="{{ url_for('add') }}" method="POST" class="input_isbm">
+            <label class="isbn_label">isbn</label>
+            <input class="input_isbn" type="text" name="ISBN" step="1.0">
+            <p class="cr">＊ハイフンはいりません</p>
+            <div class="input_reviwe">
+                <label class="review_label">コメント</label>
+                <textarea  rows="10" cols="60" name="review">ここに記入してください</textarea>
+            </div>
+            <button type="submit" class="add_button">追加</button>
+        </form>
     </div>
 </body>
 {% endblock %}

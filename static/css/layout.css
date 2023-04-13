@@ -49,8 +49,8 @@ header{
 .add_button{
     width:10vw;
     position:absolute;
-    left:79.5vw;
-    bottom:43.9vw;
+    left:5vw;
+    bottom:-14vw;
     display:block;
     font-weight: bold;
     text-decoration: none;
@@ -92,22 +92,24 @@ header{
 }
 .cr{
     position:relative;
-    bottom:10.5px;
-    left:48px;
+    bottom:2vw;
+    left:0vw;
     font-size:0.3vw;
 }
 .form-label{
     color: #1465bd;
     font-size:1.1vw;
 }
-p2{
-    color:#1465bd;
-}
-label{
-    margin-left:1.2vw;
-}
-.input_tag{
-    margin-left: 2vw;
+.input_isbn{
     position:relative;
-    right:1vw;
+    bottom:2vw;
+    width:33vw;
+}
+.isbn_label{
+    position:relative;
+    bottom:2vw;
+}
+.input_reviwe{
+    position:relative;
+    bottom:1.5vw;
 }
