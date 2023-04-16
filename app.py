@@ -141,7 +141,10 @@ def add():
             )
             db.session.add(add_book)
             add_reviews=Review(
-            comment=review
+                user_id = current_user.id,
+                isbn = isbn,
+                comment = review
+                # date = 
             )
             db.session.add(add_reviews)
             db.session.commit()
