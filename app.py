@@ -117,7 +117,6 @@ def logout():
 def main():
     book = []
     # book["book"]=Book.query.all()
-    # book["user"]=User.query.all()
     return render_template('main.html',entries=book)
 
 #add画面
