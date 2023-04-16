@@ -4,17 +4,11 @@
 <body>
     <p class="page_name">メイン画面</p>
     {% for entry in entries %}
-        <p class="username">{{ entry.username }}</p>
-    {% endfor %}
-    <p>ユーザ名：{{current_user.username}}</p>
-    {% for entry in entries %}
         <div>
-            <ul>
-                <li><img src="{{ entry.image_pass }}"></li>
-                <li>{{ entry.book_title }}</li>
-                <li>{{ entry.book_author }}</li>
-                <li>{{ entry.isbn }}</li>
-            </ul>
+            <img src="{{ entry.image_pass }}" alt="entry_image">
+            <p>{{ entry.book_title }}</p>
+            <p>>{{ entry.book_author }}</p>
+            <p>{{ book.isbn }}</p>
         </div>
     {% else %}
         <div class="n">本がありません</div>
