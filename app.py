@@ -116,7 +116,7 @@ def logout():
 @app.route("/main", methods=["GET"])
 def main():
     book = []
-    # book["book"]=Book.query.all()
+    book = Book.query.all()
     return render_template('main.html',entries=book)
 
 #add画面
