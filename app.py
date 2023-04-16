@@ -63,7 +63,6 @@ def register():
             email = request.form.get("email"),
             password=generate_password_hash(request.form.get('password'), method='sha256')
         )
-
         
         print(new_user)
         db.session.add(new_user)
@@ -73,13 +72,10 @@ def register():
         # ここにフラッシュメッセージを追加
         login_user(new_user)
         session['logged_in']=True
-        
         return render_template('main.html')
     else:
         print("error!")
         return render_template("register.html")
-
-        # ------------------------------------------------------------------------
 
 #ログイン機能
 
