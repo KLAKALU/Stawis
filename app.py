@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for,session
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -34,10 +34,10 @@ class Book(UserMixin,db.Model):
 
 class Review(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    isbn = db.column(db.String(100),)
-    comment = db.column(db.String(100))
-    date = db.column(db.String(100),)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    isbn = db.column(db.Integer)
+    comment = db.column(db.Text)
+    date = db.column(db.Integer)
 
 if __name__ == '__main__':
     app.debug = True
@@ -89,6 +89,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if check_password_hash(user.password, password):
             login_user(user)
+            session['logged_in']=True
             return redirect('/main')
         else:
             print("error!")
@@ -102,72 +103,52 @@ def login():
 @login_required
 def logout():
     logout_user()
+    session.pop('logged_in',None)
     return redirect("/")
 
 # メイン画面
 
 @app.route("/main", methods=["GET"])
 def main():
-    books_entries = Book.query.all()
-    review_entries=Review.query.all()
-    main_entry = []
-    for book_entry in books_entries:
-        username = User.query.filter_by(id=book_entry.user_id).first().username
-        main_entry.append({'username': username, 'book': book_entry.book_title})
-    return render_template('main.html',entries=main_entry)
+    book = []
+    # book["book"]=Book.query.all()
+    # book["user"]=User.query.all()
+    return render_template('main.html',entries=book)
 
 #add画面
 
-@app.route("/add", methods=["GET", "POST"])
-def add():
-    add_entry=User.query.all()
-    if request.method == 'POST':
-        file=open("isbn.txt")
-        search_isbn=file.read()
-        info=scraping(search_isbn)
-        add_book=Book(
-        isbn=search_isbn,
-        image_pass=info["img_url"],
-        book_title=info["title"],
-        bool_author=info["writer"]
-        )
-        db.session.add(add_book)
-        db.session.commit()
-        flash("本が追加されました")
-        return render_template("main.html")
-    if request.method == 'GET':
-        return render_template("add.html",entries=add_entry)
-
-# スクレイピング機能
-
 import codecs
 from scraping import scraping
-@app.route("/search", methods=["GET", "POST"])
-def search():
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    isbn = request.form.get("ISBN")
+    review=request.form.get("review")
     if request.method == 'POST':
-        info=scraping(request.form.get("ISBN"))
+        info=scraping(isbn)
         if info == None:
-            flash('存在しないISBNが入力されました')
+            flash('情報を取得することができませんでした。')
             return render_template("add.html")
         if info != None:
-            txt_file=codecs.open("isbn.txt","w")
-            txt_file.write(request.form.get("ISBN"))
-            txt_file.close()
-            file = codecs.open("./templates/c.html",'w','utf-8','ignore')
-            s = '\xa0'
-            file.write(s)
-            file.write("<meta charset='utf-8'>")
-            file.write(info["title"])
-            file.write(info["writer"])
-            #file.write(info["com"])
-            file.write('<img src="' + info["img_url"] + '">')
-            file.close()
-            return render_template('c.html')
+            add_book=Book(
+            isbn=isbn,
+            image_pass=info["img_url"],
+            book_title=info["title"],
+            bool_author=info["writer"]
+            )
+            db.session.add(add_book)
+            add_reviews=Review(
+            comment=review
+            )
+            db.session.add(add_reviews)
+            db.session.commit()
+            flash("本が追加されました")
+            return redirect(url_for('main'))
+    elif request.method == 'GET':
+        return render_template("add.html")
 
 # ポップアップ画面用のエンドポイント
+
 @app.route('/popup/<data>')
 def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
-
-#本追加処理
