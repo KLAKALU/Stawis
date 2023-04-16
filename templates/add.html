@@ -6,25 +6,17 @@
         {{ message }}
     {% endfor %}
     <div class="box">
-        <form action="/search" method="POST" class="input_isbm">
+        <form action="/add" method="POST" class="input_isbm">
             <div>
-                <label for="formFile">isbn</label>
-                <input class="input_isbm" type="text" name="ISBN" step="1.0" max="120" required>
-                <button type="submit" class="btn btn-primary mb-2">検索</button>
+                <label for="formFile">ISBN:</label>
+                <input class="input_isbm" type="text" name="ISBN" step="1.0" max="16" required>
             </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">こちらにご記入ください</label>
-                <input type="text" class="form-control" id="impressions" aria-describedby="emailHelp" placeholder="">
-        <form action="{{ url_for('add') }}" method="POST" class="input_isbm">
-            <label class="isbn_label">isbn</label>
-            <input class="input_isbn" type="text" name="ISBN" step="1.0">
             <p class="cr">＊ハイフンはいりません</p>
-            <div class="input_reviwe">
+            <div class="input_review">
                 <label class="review_label">コメント</label>
                 <textarea  rows="10" cols="60" name="review">ここに記入してください</textarea>
             </div>
-            
-            
+            <button type="submit" class="btn btn-primary mb-2">追加</button>
         </form>
     </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
