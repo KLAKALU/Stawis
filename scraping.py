@@ -8,7 +8,7 @@ def scraping(isbn):
     title=soup_.select('h3[itemprop="name"]')
     writer=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
     #com=soup_.select('div[class="infobox ml10 mt10"] > ul > li > a')
-    price=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
+    #price=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
     soup_img = bs4.BeautifulSoup(requests.get(url).content, 'lxml')
     src=[]
     for link in soup_img.find_all('img'):
@@ -27,7 +27,7 @@ def scraping(isbn):
             # img=open("./static/img/im.jpg", 'wb')
             # res.raw.decode_content = True
             # shutil.copyfileobj(res.raw, img)
-    if title==[] and writer==[] and com==[] and price==[]:
+    if title==[] and writer==[]:
         print("本が見つかりませんでした。")
         return None
     else:
@@ -35,6 +35,6 @@ def scraping(isbn):
         info["title"] = title[0].getText()
         info["writer"] = writer[0].getText()
         #info["com"] = com[1].getText()
-        info["price"] = price[2].getText()
+        #info["price"] = price[2].getText()
         info["img_url"] = img_url
     ***REMOVED***
