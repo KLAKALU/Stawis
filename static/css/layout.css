@@ -113,3 +113,12 @@ header{
     position:relative;
     bottom:1.5vw;
 }
+
+/*main画面*/
+.review_item{
+    background-color: aqua;
+    border-radius: 0.7rem;
+}
+.book_image{
+    border-radius: 0.7rem 0.7rem 0 0;
+}

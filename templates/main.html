@@ -4,8 +4,8 @@
 <body>
     <p class="page_name">メイン画面</p>
     {% for entry in entries %}
-        <div>
-            <img src="{{ entry.image_pass }}" alt="entry_image">
+        <div class="review_item">
+            <img src="{{ entry.image_pass }}" alt="entry_image" class="book_image">
             <p>{{ entry.book_title }}</p>
             <p>>{{ entry.book_author }}</p>
         </div>
