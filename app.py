@@ -29,7 +29,7 @@ class Book(UserMixin,db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
-    bool_author = db.Column(db.String(100))
+    book_author = db.Column(db.String(100))
 
 class Review(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -56,20 +56,25 @@ def register():
     """
     if request.method == 'POST':
         # create user object
+
         new_user = User(
             username = request.form.get('username'),
             email = request.form.get("email"),
             password=generate_password_hash(request.form.get('password'), method='sha256')
         )
+        
         print(new_user)
         db.session.add(new_user)
         db.session.commit()
+        
         # return 'User created successfully'
         # ここにフラッシュメッセージを追加
+        login_user(new_user)
+        session['logged_in']=True
         return render_template('main.html')
     else:
-        return render_template('register.html')
-        # ------------------------------------------------------------------------
+        print("error!")
+        return render_template("register.html")
 
 #ログイン機能
 
@@ -133,11 +138,14 @@ def add():
             isbn=isbn,
             image_pass=info["img_url"],
             book_title=info["title"],
-            bool_author=info["writer"]
+            book_author=info["writer"]
             )
             db.session.add(add_book)
             add_reviews=Review(
-            comment=review
+                user_id = current_user.id,
+                isbn = isbn,
+                comment = review
+                # date = 
             )
             db.session.add(add_reviews)
             db.session.commit()
