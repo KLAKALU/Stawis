@@ -30,7 +30,7 @@ class Book(UserMixin,db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
-    bool_author = db.Column(db.String(100))
+    book_author = db.Column(db.String(100))
 
 class Review(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -138,7 +138,7 @@ def add():
             isbn=isbn,
             image_pass=info["img_url"],
             book_title=info["title"],
-            bool_author=info["writer"]
+            book_author=info["writer"]
             )
             db.session.add(add_book)
             add_reviews=Review(
