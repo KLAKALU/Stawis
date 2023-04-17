@@ -18,6 +18,8 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+login_manager.login_view = 'login'
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
@@ -110,16 +112,19 @@ def logout():
 # メイン画面
 
 @app.route("/main", methods=["GET"])
+@login_required
 def main():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     else:
-        book = Book.query.all()
+        book = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
+        print(book)
         return render_template('main.html',entries=book)
 
 #add画面
 
 @app.route("/add", methods=["GET", "POST"])
+@login_required
 def add():
     if request.method == 'POST':
         isbn = request.form.get("ISBN")
