@@ -7,7 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 import codecs
 from scraping import scraping
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -110,10 +109,11 @@ def logout():
 
 @app.route("/main", methods=["GET"])
 def main():
-    book = []
-    book["book"]=Book.query.all()
-    book["user"]=User.query.all()
-    return render_template('main.html',entries=book)
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        book = Book.query.all()
+        return render_template('main.html',entries=book)
 
 #add画面
 
