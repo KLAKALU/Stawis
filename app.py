@@ -83,7 +83,7 @@ def login():
     """
 
     if request.method == 'POST':
-        username =  request.form.get("username")
+        username = request.form.get("username")
         password = request.form.get('password')
         # global status
         # Userテーブルからusernameに一致するユーザを取得
@@ -119,13 +119,11 @@ def main():
 
 #add画面
 
-import codecs
-from scraping import scraping
 @app.route("/add", methods=["GET", "POST"])
 def add():
     if request.method == 'POST':
         isbn = request.form.get("ISBN")
-        review=request.form.get("review")
+        review = request.form.get("review")
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
             info=scraping(isbn)
@@ -133,11 +131,11 @@ def add():
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")
             else:
-                add_book=Book(
-                isbn=isbn,
-                image_pass=info["img_url"],
-                book_title=info["title"],
-                book_author=info["writer"]
+                add_book = Book(
+                isbn = isbn,
+                image_pass = info["img_url"],
+                book_title = info["title"],
+                book_author = info["writer"]
                 )
                 db.session.add(add_book)
         add_reviews=Review(
