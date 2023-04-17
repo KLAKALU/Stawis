@@ -6,9 +6,9 @@
     {% for entry in entries %}
         <div>
             <img src="{{ entry.image_pass }}" alt="entry_image">
-            <p>{{ entry.book_title }</p>}
+            <p>{{ entry.book_title }}</p>
             <p>>{{ entry.book_author }}</p>
-            <p>{{ book.isbn }}</p>
+            <p>{{ entry.isbn }}</p>
         </div>
     {% else %}
         <div class="n">本がありません</div>
