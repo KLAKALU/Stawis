@@ -4,7 +4,6 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask_sqlalchemy import SQLAlchemy
-import codecs
 from scraping import scraping
 
 app = Flask(__name__)
