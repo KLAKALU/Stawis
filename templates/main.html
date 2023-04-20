@@ -6,8 +6,10 @@
     {% for entry in entries %}
         <div class="review_item">
             <img src="{{ entry.image_pass }}" alt="entry_image" class="book_image">
-            <p>{{ entry.book_title }}</p>
-            <p>>{{ entry.book_author }}</p>
+            <p>タイトル:{{ entry.book_title }}</p>
+            <p>作者:{{ entry.book_author }}</p>
+            <a href="{{ url_for('review', isbn=entry.isbn) }}" data-toggle="modal" data-target="#myModal">感想を見る</a>
+            <a href="{{ url_for('edit',isbn=entry.isbn) }}">編集する</a>
         </div>
     {% else %}
         <div class="n">本がありません</div>

@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h3>{{ book.book_title }}</h3>
+  <h3>感想:</h3>
+  {% for review in reviews %}
+    <p>{{ review.comment }}</p>
+  {% endfor %}
+{% endblock %}
