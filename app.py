@@ -116,9 +116,8 @@ def main():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     else:
-        book = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
-        print(book)
-        return render_template('main.html',entries=book)
+        books = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
+        return render_template('main.html',entries=books)
 
 #add画面
 
