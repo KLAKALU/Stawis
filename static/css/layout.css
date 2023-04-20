@@ -35,6 +35,7 @@ header{
 }
 .logout_button:hover{
     text-decoration:underline;
+    color:white;
 }
 .username{
     position:absolute;
@@ -49,8 +50,8 @@ header{
 .add_button{
     width:10vw;
     position:absolute;
-    left:5vw;
-    bottom:-14vw;
+    left:70vw;
+    bottom: 42vw;
     display:block;
     font-weight: bold;
     text-decoration: none;
@@ -118,6 +119,7 @@ header{
 .review_item{
     background-color: aqua;
     border-radius: 0.7rem;
+    width:30vw;
 }
 .book_image{
     border-radius: 0.7rem 0.7rem 0 0;
