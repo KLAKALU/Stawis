@@ -69,7 +69,7 @@ def register():
         # ここにフラッシュメッセージを追加
         login_user(new_user)
         session['logged_in']=True
-        return render_template('main.html')
+        return redirect(url_for('main'))
     else:
         print("error!")
         return render_template("register.html")
@@ -92,7 +92,7 @@ def login():
         if check_password_hash(user.password, password):
             login_user(user)
             session['logged_in']=True
-            return redirect('/main')
+            return redirect(url_for('main'))
         else:
             print("error!")
             return render_template("login.html")
@@ -130,16 +130,16 @@ def add():
         review = request.form.get("review")
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
-            info=scraping(isbn)
-            if info == None:
+            book_data=scraping(isbn)
+            if book_data == None:
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")
             else:
                 add_book = Book(
                 isbn = isbn,
-                image_pass = info["img_url"],
-                book_title = info["title"],
-                book_author = info["writer"]
+                image_pass = book_data["img_url"],
+                book_title = book_data["title"],
+                book_author = book_data["writer"]
                 )
                 db.session.add(add_book)
         add_reviews=Review(
