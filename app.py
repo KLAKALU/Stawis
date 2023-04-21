@@ -2,11 +2,10 @@ from flask import Flask
 from flask import render_template, request, redirect, flash, url_for,session
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
 from flask_modals import Modal
-import datetime
+import os,datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
@@ -57,6 +56,7 @@ def register():
     GET: register.htmlの表示
     POST: ユーザの追加
     """
+
     if request.method == 'POST':
         # create user object
         new_user = User(
@@ -129,6 +129,7 @@ def add():
     if request.method == 'POST':
         isbn = request.form.get("ISBN")
         review = request.form.get("review")
+
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
             book_data=scraping(isbn)
@@ -143,6 +144,7 @@ def add():
                 book_author = book_data["writer"]
                 )
                 db.session.add(add_book)
+
         add_reviews=Review(
             user_id = current_user.id,
             isbn = isbn,
