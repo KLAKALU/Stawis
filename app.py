@@ -27,13 +27,13 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(80))
     reviews = db.relationship('Review', backref='user', lazy=True)
 
-class Book(UserMixin,db.Model):
+class Book(db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
     book_author = db.Column(db.String(100))
 
-class Review(UserMixin,db.Model):
+class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     isbn = db.Column(db.Integer)
