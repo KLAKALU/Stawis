@@ -91,13 +91,13 @@ def login():
         # global status
         # Userテーブルからusernameに一致するユーザを取得
         user = User.query.filter_by(username=username).first()
-        if check_password_hash(user.password, password):
-            login_user(user)
-            session['logged_in']=True
-            return redirect(url_for('main'))
-        else:
-            print("error!")
-            return render_template("login.html")
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user)
+                session['logged_in']=True
+                return redirect(url_for('main'))
+        flash('ユーザー名かパスワードが間違っています')
+        return render_template("login.html", username = username)
     else:
         return render_template("login.html")
 

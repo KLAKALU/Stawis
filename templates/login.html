@@ -18,7 +18,11 @@
     <form class="row g-3" action="/login" method="POST">
         <div class="col-7 align-self-center">
             <label for="inputEmail4" class="form-label">Username</label>
-            <input type="username" name="username"class="form-control" id="inputEmail4" required>
+            {% if username %}
+                <input type="username" name="username"class="form-control" id="inputEmail4" value="{{username}}"required>
+            {% else %}
+                <input type="username" name="username"class="form-control" id="inputEmail4" required>
+            {% endif %}
         </div>
         <div class="col-7 align-self-center">
             <label for="inputAddress" class="form-label">Password</label>
