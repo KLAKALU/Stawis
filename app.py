@@ -59,9 +59,18 @@ def register():
 
     if request.method == 'POST':
         # create user object
+        username = request.form.get('username')
+        email = request.form.get("email")
+        # ユーザ名が既にある場合
+        if User.query.filter_by(username=username).first():
+            flash('そのユーザー名は既に使われています')
+            return render_template("register.html")
+        if User.query.filter_by(email=email).first():
+            flash('そのメールアドレスは既に登録されています')
+            return render_template("register.html")
         new_user = User(
-            username = request.form.get('username'),
-            email = request.form.get("email"),
+            username = username,
+            email = email,
             password=generate_password_hash(request.form.get('password'), method='sha256')
         )
         print(new_user)
