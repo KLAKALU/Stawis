@@ -67,7 +67,6 @@ def register():
         print(new_user)
         db.session.add(new_user)
         db.session.commit()
-        # return 'User created successfully'
         # ここにフラッシュメッセージを追加
         login_user(new_user)
         session['logged_in']=True
@@ -82,7 +81,7 @@ def register():
 def login():
     """
     GET: loginページの表示
-    POST: username, passwordの取得, sesion情報の登録
+    POST: username, passwordの取得, session情報の登録
     """
 
     if request.method == 'POST':
@@ -96,6 +95,7 @@ def login():
                 login_user(user)
                 session['logged_in']=True
                 return redirect(url_for('main'))
+        #userが取得できない、又はパスワードが違う場合
         flash('ユーザー名かパスワードが間違っています')
         return render_template("login.html", username = username)
     else:
