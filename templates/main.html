@@ -13,7 +13,6 @@
         <img src="{{ book.image_pass }}" alt="entry_image" class="book_image">
         <p>タイトル:{{ book.book_title }}</p>
         <p>作者:{{ book.book_author }}</p>
-        <body>
           <!-- モーダルを開くボタン・リンク -->
           <div class="container">
               <div class="row mb-5">
@@ -44,6 +43,7 @@
             </div>
             <!-- モーダル終了 -->
           </div>
+      </div>
     {% else %}
         <div class="n">本がありません</div>
     {% endfor %}
