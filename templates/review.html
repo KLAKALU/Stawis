@@ -6,4 +6,5 @@
   {% for review in reviews %}
     <p>{{ review.comment }}</p>
   {% endfor %}
+  <a href="{{ url_for('edit',isbn=book.isbn) }}">編集する</a>
 {% endblock %}

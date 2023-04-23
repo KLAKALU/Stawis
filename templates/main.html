@@ -1,18 +1,50 @@
+<head>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/js/jquery-3.6.3.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+</head>
 {% extends 'layout.html' %}
 {% block content %}
 <a class="add_button" href="/add">本を追加する</a>
 <body>
     <p class="page_name">メイン画面</p>
-    {% for entry in entries %}
-        <div class="review_item">
-            <img src="{{ entry.image_pass }}" alt="entry_image" class="book_image">
-            <p>タイトル:{{ entry.book_title }}</p>
-            <p>作者:{{ entry.book_author }}</p>
-            <a href="{{ url_for('review', isbn=entry.isbn) }}" data-toggle="modal" data-target="#myModal">感想を見る</a>
-            <a href="{{ url_for('edit',isbn=entry.isbn) }}">編集する</a>
-        </div>
+    {% for book in books %}
+      <div class="review_item">
+        <img src="{{ book.image_pass }}" alt="entry_image" class="book_image">
+        <p>タイトル:{{ book.book_title }}</p>
+        <p>作者:{{ book.book_author }}</p>
+        <body>
+          <!-- モーダルを開くボタン・リンク -->
+          <div class="container">
+              <div class="row mb-5">
+                  <div class="col-2">
+                      <button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">感想</button>
+                  </div>
+              </div>
+              <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>感想</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>{% for review in reviews %}
+                              {% if review.isbn == book.isbn %}
+                              <p>{{review.comment}}</p>
+                              {% endif %}
+                              {% endfor %}</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                            <button type="button" class="btn btn-danger" href="{{ url_for('edit',isbn=book.isbn) }}">編集する</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
     {% else %}
         <div class="n">本がありません</div>
     {% endfor %}
 </body>
 {% endblock %}
+
