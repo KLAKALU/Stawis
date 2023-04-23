@@ -5,13 +5,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
-from flask_modals import Modal
-import datetime
+from flask_modals import Modal, render_template_modal
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
 app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
+modal=Modal(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -119,7 +120,8 @@ def main():
         return redirect(url_for('login'))
     else:
         books = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
-        return render_template('main.html',entries=books)
+        reviews = Review.query.all()
+        return render_template_modal('main.html',books=books,reviews=reviews)
 
 #add画面
 
