@@ -117,6 +117,7 @@ header{
 
 /*main画面*/
 .review_item{
+    all: unset;
     background-color: aqua;
     border-radius: 0.7rem;
     width:30vw;
