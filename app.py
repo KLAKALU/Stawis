@@ -4,7 +4,7 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
-from flask_modals import Modal
+from flask_modals import Modal, render_template_modal
 import os,datetime
 
 app = Flask(__name__)
