@@ -120,6 +120,11 @@ header{
     background-color: aqua;
     border-radius: 0.7rem;
     width:30vw;
+    transition: transform 1s 0.2s;
+}
+.review_item:hover{
+    cursor: pointer;
+    transform: scale(1.05, 1.05);
 }
 .book_image{
     border-radius: 0.7rem 0.7rem 0 0;
