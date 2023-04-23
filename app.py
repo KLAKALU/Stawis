@@ -2,11 +2,10 @@ from flask import Flask
 from flask import render_template, request, redirect, flash, url_for,session
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
-from flask_modals import Modal, render_template_modal
-
+from flask_modals import Modal
+import os,datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
@@ -29,13 +28,13 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(80))
     reviews = db.relationship('Review', backref='user', lazy=True)
 
-class Book(UserMixin,db.Model):
+class Book(db.Model):
     isbn = db.Column(db.Integer, primary_key=True)
     image_pass = db.Column(db.String(100), unique=True)
     book_title = db.Column(db.String(100), unique=True)
     book_author = db.Column(db.String(100))
 
-class Review(UserMixin,db.Model):
+class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     isbn = db.Column(db.Integer)
@@ -58,17 +57,26 @@ def register():
     GET: register.htmlの表示
     POST: ユーザの追加
     """
+
     if request.method == 'POST':
         # create user object
+        username = request.form.get('username')
+        email = request.form.get("email")
+        # ユーザ名が既にある場合
+        if User.query.filter_by(username=username).first():
+            flash('そのユーザー名は既に使われています')
+            return render_template("register.html")
+        if User.query.filter_by(email=email).first():
+            flash('そのメールアドレスは既に登録されています')
+            return render_template("register.html")
         new_user = User(
-            username = request.form.get('username'),
-            email = request.form.get("email"),
+            username = username,
+            email = email,
             password=generate_password_hash(request.form.get('password'), method='sha256')
         )
         print(new_user)
         db.session.add(new_user)
         db.session.commit()
-        # return 'User created successfully'
         # ここにフラッシュメッセージを追加
         login_user(new_user)
         session['logged_in']=True
@@ -83,7 +91,7 @@ def register():
 def login():
     """
     GET: loginページの表示
-    POST: username, passwordの取得, sesion情報の登録
+    POST: username, passwordの取得, session情報の登録
     """
 
     if request.method == 'POST':
@@ -92,13 +100,14 @@ def login():
         # global status
         # Userテーブルからusernameに一致するユーザを取得
         user = User.query.filter_by(username=username).first()
-        if check_password_hash(user.password, password):
-            login_user(user)
-            session['logged_in']=True
-            return redirect(url_for('main'))
-        else:
-            print("error!")
-            return render_template("login.html")
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user)
+                session['logged_in']=True
+                return redirect(url_for('main'))
+        #userが取得できない、又はパスワードが違う場合
+        flash('ユーザー名かパスワードが間違っています')
+        return render_template("login.html", username = username)
     else:
         return render_template("login.html")
 
@@ -131,6 +140,7 @@ def add():
     if request.method == 'POST':
         isbn = request.form.get("ISBN")
         review = request.form.get("review")
+
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
             book_data=scraping(isbn)
@@ -145,6 +155,7 @@ def add():
                 book_author = book_data["writer"]
                 )
                 db.session.add(add_book)
+
         add_reviews=Review(
             user_id = current_user.id,
             isbn = isbn,
