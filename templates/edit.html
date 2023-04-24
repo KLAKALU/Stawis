@@ -3,8 +3,12 @@
 <p>編集画面</p>
 <img src="{{ book.image_pass }}" alt="表紙">
 <p>{{ book.book_title }}</p>
-<form actin="{{ url_for('update', isbn=book.isbn)}}" method='POST'>
-    <textarea name="comment" rows="5" required>{{ reviews.comment }}</textarea>
+<form actin="{{ url_for('edit', isbn=book.isbn)}}" method='POST'>
+    {% for review in reviews %}
+    {% if review.isbn == book.isbn %}
+    <textarea name="comment" rows="5" required>{{ review.comment }}</textarea>
+    {% endif %}
+    {% endfor %}
     <button type="submit">更新</button>
 </form>
 {% endblock %}
