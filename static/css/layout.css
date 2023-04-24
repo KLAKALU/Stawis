@@ -67,6 +67,7 @@ header{
 .add_button:hover{
     color:#27acd9;
     background-color:white;
+    text-decoration: none;
 }
 
 /*body*/
