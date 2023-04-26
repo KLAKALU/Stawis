@@ -4,7 +4,7 @@ header{
     height:3.5vw;
     width:99vw;
     position:relative;
-    top:-0.4vw;
+    top:0.1vw;
     z-index:10;
     border-radius: 10px;
 }
@@ -50,8 +50,8 @@ header{
 .add_button{
     width:10vw;
     position:absolute;
-    left:70vw;
-    bottom: 42vw;
+    left:68.5vw;
+    bottom: 42.5vw;
     display:block;
     font-weight: bold;
     text-decoration: none;
@@ -67,6 +67,7 @@ header{
 .add_button:hover{
     color:#27acd9;
     background-color:white;
+    text-decoration: none;
 }
 
 /*body*/
@@ -89,11 +90,10 @@ header{
     padding-top:3vw;
     padding-bottom:1vw;
     border-radius:10px;
-    background-color:#d8d1cb;
 }
 .cr{
     position:relative;
-    bottom:2vw;
+    bottom:0vw;
     left:0vw;
     font-size:0.3vw;
 }
@@ -104,14 +104,21 @@ header{
 .input_isbn{
     position:relative;
     bottom:2vw;
+    left:-2vw;
     width:33vw;
 }
 .isbn_label{
     position:relative;
     bottom:2vw;
 }
-.input_reviwe{
+.input_review{
     position:relative;
+    bottom:2vw;
+    left:-6vw;
+}
+form button{
+    position:relative;
+    left:-5.8vw;
     bottom:1.5vw;
 }
 
