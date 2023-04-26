@@ -22,6 +22,8 @@
         <li>{{ message }}</li>
         {% endfor %}
     </ul>
+    {% endif %}
+    {% endwith %}
     <form class="row g-3" action="/login" method="POST">
         <div class="col-7 align-self-center">
             <label for="inputEmail4" class="form-label">Username</label>
