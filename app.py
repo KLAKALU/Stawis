@@ -176,34 +176,16 @@ def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
 
-#仮
-@app.route('/review/<isbn>')
-def review(isbn):
-    book = Book.query.get_or_404(isbn)
-    reviews = Review.query.filter_by(isbn=isbn).all()
-    return render_template('review.html', reviews=reviews, book=book)
-
-@app.route('/edit/<isbn>')
+#編集機能
+    
+@app.route('/edit/<isbn>',methods=["GET", "POST"])
 def edit(isbn):
     book = Book.query.get_or_404(isbn)
     reviews = Review.query.filter_by(isbn=isbn).all()
+    if request.method == 'POST':
+        comment = request.form.get("comment")
+        review = Review.query.filter_by(isbn=isbn).first()
+        review.comment = comment
+        db.session.commit()
+        return redirect(url_for('main'))
     return render_template('edit.html', reviews=reviews, book=book)
-    
-@app.route('/update/<isbn>', methods=["POST"])
-def update(isbn):
-    if request.method == 'POST':
-        reviews = Review.query.filter_by(isbn=isbn).all()
-        for review in reviews:
-            review.comment = request.form.get('comment')
-            db.session.add(review)
-        db.session.commit()
-        return redirect(url_for('main'))
-
-@app.route('/edit/<isbn>', methods=['GET', 'POST'])
-def edit_review(isbn):
-    review = Review.query.get(isbn)
-    if request.method == 'POST':
-        review.comment = request.form['comment']
-        db.session.commit()
-        return redirect(url_for('main'))
-    return render_template('edit.html', review=review)
