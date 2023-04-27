@@ -5,12 +5,10 @@
 </head>
 {% extends 'layout.html' %}
 {% block content %}
-<a class="add_button" href="/add">本を追加する</a>
-
 <body>
-    <p class="page_name">メイン画面</p>
+<a class="add_button" href="/add">本を追加する</a>
+<div class="review_wrapper">
     {% for book in books %}
-    <div class="container">
         <button type="button" class="review_item" data-toggle="modal" data-target="#testModal">
             <img src="{{ book.image_pass }}" alt="entry_image" class="book_image">
             <p>タイトル:{{ book.book_title }}</p>
@@ -40,9 +38,9 @@
             </div>
         </div>
         <!-- モーダル終了 -->
-    </div>
     {% else %}
     <div class="n">本がありません</div>
     {% endfor %}
+    </div>
 </body>
 {% endblock %}
