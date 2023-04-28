@@ -2,14 +2,16 @@
 import requests,bs4
 
 def scraping(isbn):
-    url=r"https://www.kinokuniya.co.jp/f/dsg-01-" + str(isbn)
+    url=r"https://books.rakuten.co.jp/rb/" + str(isbn) + "/"
     open_=requests.get(url)
     soup_=bs4.BeautifulSoup(open_.content,"html.parser")
-    title=soup_.select('h3[itemprop="name"]')
-    writer=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
+    title=soup_.select('#productTitle > h1')
+    writer=soup_.select('#productTitle > h1 > a')
     #com=soup_.select('div[class="infobox ml10 mt10"] > ul > li > a')
     #price=soup_.select('div[class="infobox ml10 mt10"] > ul > li')
-    soup_img = bs4.BeautifulSoup(requests.get(url).content, 'lxml')
+    # soup_img = bs4.BeautifulSoup(requests.get(url).content, 'lxml')
+    img = soup_.select('#imageSlider > li.lslide.active > img')
+    print(img)
     src=[]
     for link in soup_img.find_all('img'):
         if link.get('src').endswith('.jpg'):
@@ -27,13 +29,16 @@ def scraping(isbn):
             # img=open("./static/img/im.jpg", 'wb')
             # res.raw.decode_content = True
             # shutil.copyfileobj(res.raw, img)
-    if title==[] and writer==[]:
+    if title==[] and rawwriter==[]:
         print("本が見つかりませんでした。")
         return None
     else:
     ***REMOVED***
         info["title"] = title[0].getText()
-        info["writer"] = writer[0].getText()
+        if writer:
+            info["writer"] = writer[0].getText()
+        else:
+            info["writer"] = null
         #info["com"] = com[1].getText()
         #info["price"] = price[2].getText()
         info["img_url"] = img_url

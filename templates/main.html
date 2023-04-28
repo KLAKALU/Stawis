@@ -23,10 +23,11 @@
                         <h4>感想</h4>
                     </div>
                     <div class="modal-body">
-                        <label>{% for review in reviews %}
-                            {% if review.isbn == book.isbn %}
-                            <p>{{review.comment}}</p>
-                            {% endif %}
+                        <label>
+                            {% for review in reviews %}
+                                {% if review.isbn == book.isbn %}
+                                    <p>{{review.comment}}</p>
+                                {% endif %}
                             {% endfor %}
                         </label>
                     </div>
