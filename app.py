@@ -176,6 +176,13 @@ def popup(data):
     # 画面から送られてきたデータを表示するため、データも一緒に送信
     return render_template('popup.html', data=data)
 
+#レビュー
+@app.route('/review/<isbn>')
+def review(isbn):
+    book = Book.query.get_or_404(isbn)
+    reviews = Review.query.filter_by(isbn=isbn).all()
+    return render_template("review.html", book=book, reviews=reviews)
+
 #編集機能
     
 @app.route('/edit/<isbn>',methods=["GET", "POST"])
