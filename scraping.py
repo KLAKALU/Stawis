@@ -33,7 +33,7 @@ def scraping(isbn):
         print("本が見つかりませんでした。")
         return None
     else:
-    ***REMOVED***
+        info = {}
         info["title"] = title[0].getText()
         if writer:
             info["writer"] = writer[0].getText()
@@ -42,4 +42,4 @@ def scraping(isbn):
         #info["com"] = com[1].getText()
         #info["price"] = price[2].getText()
         info["img_url"] = img_url
-    ***REMOVED***
+        return info
