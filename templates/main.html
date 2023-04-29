@@ -9,11 +9,13 @@
 <a class="add_button" href="/add">本を追加する</a>
 <div class="review_wrapper">
     {% for book in books %}
-        <button type="button" class="review_item" data-toggle="modal" data-target="#testModal">
+        <!--<button type="button" class="review_item" data-toggle="modal" data-target="#testModal">-->
+        <a href="{{ url_for('review',isbn=book.isbn) }}" class="review_item">
             <img src="{{ book.image_pass }}" alt="entry_image" class="book_image">
             <p>タイトル:{{ book.book_title }}</p>
             <p>作者:{{ book.book_author }}</p>
-        </button>
+        </a>
+        <!--</button>-->
         <!-- モーダル開始 -->
         <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
             aria-hidden="true">
