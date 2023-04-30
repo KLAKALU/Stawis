@@ -159,8 +159,8 @@ def add():
         add_reviews=Review(
             user_id = current_user.id,
             isbn = isbn,
-            comment = review
-            # date = 
+            comment = review,
+            date = datetime.datetime.now().strftime('%Y-%m-%d')
         )
         db.session.add(add_reviews)
         db.session.commit()
