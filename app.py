@@ -39,7 +39,7 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     isbn = db.Column(db.Integer)
     comment = db.Column(db.Text)
-    date = db.Column(db.Integer)
+    date = db.Column(db.Text)
 
 if __name__ == '__main__':
     app.debug = True
