@@ -2,6 +2,8 @@
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <script src="../static/js/jquery-3.6.3.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/lightbox.min.css">
+    <script src="../static/js/lightbox-plus-jquery.min.js"></script>
 </head>
 {% extends 'layout.html' %}
 {% block content %}
@@ -12,8 +14,8 @@
         <!--<button type="button" class="review_item" data-toggle="modal" data-target="#testModal">-->
         <a href="{{ url_for('review',isbn=book.isbn) }}" class="review_item">
             <img src="{{ book.image_pass }}" alt="entry_image" class="book_image">
-            <p>タイトル:{{ book.book_title }}</p>
-            <p>作者:{{ book.book_author }}</p>
+            <p>{{ book.book_title }}</p>
+            <p>{{ book.book_author }}</p>
         </a>
         <!--</button>-->
         <!-- モーダル開始 -->
@@ -35,7 +37,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-                        <a type="button" href="{{ url_for('edit',isbn=book.isbn) }}">編集する</a>
+                        <a href="{{ url_for('edit',isbn=book.isbn) }}">編集する</a>
                     </div>
                 </div>
             </div>
