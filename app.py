@@ -39,7 +39,7 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     isbn = db.Column(db.Integer)
     comment = db.Column(db.Text)
-    date = db.Column(db.Integer)
+    date = db.Column(db.Text)
 
 if __name__ == '__main__':
     app.debug = True
@@ -159,8 +159,8 @@ def add():
         add_reviews=Review(
             user_id = current_user.id,
             isbn = isbn,
-            comment = review
-            # date = 
+            comment = review,
+            date = datetime.datetime.now().strftime('%Y-%m-%d')
         )
         db.session.add(add_reviews)
         db.session.commit()
