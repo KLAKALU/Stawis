@@ -5,7 +5,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
 from flask_modals import Modal, render_template_modal
+from dotenv import load_dotenv
 import os,datetime
+
+load_dotenv() 
+
+apikey = os.getenv('WEBAPI_KEY')
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
