@@ -4,6 +4,7 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
+from getbookdetail import fetchbookdata
 from flask_modals import Modal, render_template_modal
 from dotenv import load_dotenv
 import os,datetime
@@ -148,7 +149,7 @@ def add():
 
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
-            book_data=scraping(isbn)
+            book_data=fetchbookdata(apikey, isbn)
             if book_data == None:
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")

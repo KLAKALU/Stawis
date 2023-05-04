@@ -1,7 +1,7 @@
 import requests
 
 
-def getbookdetail(apikey,isbn):
+def fetchbookdata(apikey,isbn):
     endpoint = 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20170404'
     appid = '?applicationId=' + apikey
     value = '&isbnjan=' + isbn
