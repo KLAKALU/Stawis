@@ -1,5 +1,4 @@
 import requests
-import json
 
 
 def getbookdetail(apikey,isbn):
@@ -9,7 +8,6 @@ def getbookdetail(apikey,isbn):
     uri = endpoint + appid + value
     r = requests.get(uri)
     json_load = r.json()
-    print(json.dumps(json_load, indent=2, ensure_ascii=False))
     info = {}
     info["title"] = json_load['Items'][0]['Item']['title']
     info['writer'] = json_load['Items'][0]['Item']['author']
