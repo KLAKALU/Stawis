@@ -37,7 +37,7 @@ class Book(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    isbn = db.Column(db.Integer)
+    isbn = db.Column(db.Integer, db.ForeignKey('book.isbn'))
     comment = db.Column(db.Text)
     date = db.Column(db.Text)
 
@@ -128,9 +128,9 @@ def main():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     else:
-        books = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
-        reviews = Review.query.all()
-        return render_template_modal('main.html',books=books,reviews=reviews)
+        books = db.session.query(Book, Review).join(Book, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id).all()
+        print(books)
+        return render_template_modal('main.html',books=books)
 
 #add画面
 

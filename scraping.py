@@ -13,7 +13,7 @@ def scraping(isbn):
     img = soup_.select('#imageSlider > li.lslide.active > img')
     print(img)
     src=[]
-    for link in soup_img.find_all('img'):
+    for link in img.find('img'):
         if link.get('src').endswith('.jpg'):
             src.append(link.get('src'))
     if src==[]:
