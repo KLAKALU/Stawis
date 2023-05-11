@@ -124,13 +124,10 @@ def login():
 def googlelogin_callback():
     try:
         # Specify the CLIENT_ID of the app that accesses the backend:
+        # idinfoは辞書型でデータを格納
         idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requests.Request(), google_clientid)
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
-        userid = idinfo['sub']
-        print(userid)
-        print(idinfo['email'])
-        print(idinfo)
         return redirect(url_for('main'))
     except ValueError:
         # Invalid token
