@@ -22,6 +22,7 @@ def load_user(user_id):
 
 login_manager.login_view = 'login'
 
+# 各APIのkeyを.envから取得
 load_dotenv() 
 rakuten_apikey = os.getenv('RAKUTEN_WEBAPI_KEY')
 google_apikey = os.getenv('GOOGLE_APIKEY')
