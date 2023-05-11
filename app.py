@@ -115,7 +115,7 @@ def login():
         flash('ユーザー名かパスワードが間違っています')
         return render_template("login.html", username = username)
     else:
-        return render_template("login.html")
+        return render_template("login.html", google_apikey = google_apikey)
 
 #ログアウト機能
 
