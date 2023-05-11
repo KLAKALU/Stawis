@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
 from flask_modals import Modal, render_template_modal
 from dotenv import load_dotenv
+from google.oauth2 import id_token
+from google.auth.transport import requests
 import os,datetime
 
 app = Flask(__name__)
@@ -25,7 +27,7 @@ login_manager.login_view = 'login'
 # 各APIのkeyを.envから取得
 load_dotenv() 
 rakuten_apikey = os.getenv('RAKUTEN_WEBAPI_KEY')
-google_apikey = os.getenv('GOOGLE_APIKEY')
+google_clientid = os.getenv('GOOGLE_APIKEY')
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -116,7 +118,32 @@ def login():
         flash('ユーザー名かパスワードが間違っています')
         return render_template("login.html", username = username)
     else:
-        return render_template("login.html", google_apikey = google_apikey)
+        return render_template("login.html", google_clientid = google_clientid)
+
+@app.route('/googlelogin_callback', methods=['POST'])
+def googlelogin_callback():
+    try:
+        # Specify the CLIENT_ID of the app that accesses the backend:
+        idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requests.Request(), google_clientid)
+
+        # Or, if multiple clients access the backend server:
+        # idinfo = id_token.verify_oauth2_token(token, requests.Request())
+        # if idinfo['aud'] not in [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]:
+        #     raise ValueError('Could not verify audience.')
+
+        # If auth request is from a G Suite domain:
+        # if idinfo['hd'] != GSUITE_DOMAIN_NAME:
+        #     raise ValueError('Wrong hosted domain.')
+
+        # ID token is valid. Get the user's Google Account ID from the decoded token.
+        userid = idinfo['sub']
+        print(userid)
+        print(idinfo['email'])
+        print(idinfo)
+        return redirect(url_for('main'))
+    except ValueError:
+        # Invalid token
+        pass
 
 #ログアウト機能
 

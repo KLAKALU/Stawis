@@ -56,7 +56,8 @@
     <script src="https://accounts.google.com/gsi/client"></script>
   <div
     id="g_id_onload"
-    data-client_id="{{google_apikey}}"
+    data-client_id="{{google_clientid}}"
+    data-login_uri="http://localhost:5000/googlelogin_callback"
     data-context="signup"
     data-ux_mode="redirect"
     data-auto_prompt="false">
