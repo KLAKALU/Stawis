@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
 from flask_modals import Modal, render_template_modal
+from dotenv import load_dotenv
 import os,datetime
 
 app = Flask(__name__)
@@ -20,6 +21,10 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 login_manager.login_view = 'login'
+
+load_dotenv() 
+rakuten_apikey = os.getenv('RAKUTEN_WEBAPI_KEY')
+google_apikey = os.getenv('GOOGLE_APIKEY')
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
