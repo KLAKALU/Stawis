@@ -128,6 +128,21 @@ def googlelogin_callback():
         idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requests.Request(), google_clientid)
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
+        # そのgoogleアカウントのメールが既に登録済みの場合
+        if User.query.filter_by(email=idinfo['mail']).first():
+            user = User.query.filter_by(email=idinfo['mail']).first()
+            login_user(user)
+        # そのgoogleアカウントのメールがデータベースになく、新規登録の場合
+        else:
+            new_user = User(
+            username = idinfo['name'],
+            email = idinfo['mail'],
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            # ここにフラッシュメッセージを追加
+            login_user(new_user)
+        session['logged_in']=True
         return redirect(url_for('main'))
     except ValueError:
         # Invalid token
