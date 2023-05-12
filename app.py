@@ -169,10 +169,9 @@ def logout():
 def main():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    else:
-        books = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
-        reviews = Review.query.all()
-        return render_template_modal('main.html',books=books,reviews=reviews)
+    books = db.session.query(Book, Review).join(Book, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id).all()
+        print(books)
+        return render_template_modal('main.html',books=books)
 
 #add画面
 
