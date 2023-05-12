@@ -6,12 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
 from flask_modals import Modal, render_template_modal
 import os,datetime
+from flask_oauthlib.client import OAuth
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
 app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
 modal=Modal(app)
+oauth = OAuth(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -37,7 +39,7 @@ class Book(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    isbn = db.Column(db.Integer, db.ForeignKey('book.isbn'))
+    isbn = db.Column(db.Integer)
     comment = db.Column(db.Text)
     date = db.Column(db.Text)
 
@@ -128,9 +130,9 @@ def main():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     else:
-        books = db.session.query(Book, Review).join(Book, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id).all()
-        print(books)
-        return render_template_modal('main.html',books=books)
+        books = db.session.query(Book).join(Review, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id)
+        reviews = Review.query.all()
+        return render_template_modal('main.html',books=books,reviews=reviews)
 
 #add画面
 
@@ -196,3 +198,16 @@ def edit(isbn):
         db.session.commit()
         return redirect(url_for('main'))
     return render_template('edit.html', reviews=reviews, book=book)
+
+#削除機能
+
+@app.route('/delete/<isbn>')
+def delete(isbn):
+    book = Book.query.get_or_404(isbn)
+    reviews = Review.query.filter_by(isbn=isbn).all()
+    db.session.delete(book)
+    for review in reviews:
+        db.session.delete(review)
+    db.session.commit()
+    return redirect(url_for('main'))
+    
