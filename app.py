@@ -5,6 +5,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from scraping import scraping
 from flask_modals import Modal, render_template_modal
+from dotenv import load_dotenv
+from google.oauth2 import id_token
+from google.auth.transport import requests
 import os,datetime
 from flask_oauthlib.client import OAuth
 
@@ -22,6 +25,11 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 login_manager.login_view = 'login'
+
+# 各APIのkeyを.envから取得
+load_dotenv() 
+rakuten_apikey = os.getenv('RAKUTEN_WEBAPI_KEY')
+google_clientid = os.getenv('GOOGLE_APIKEY')
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,7 +53,8 @@ class Review(db.Model):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='127.0.0.1')
+    # app.run(host='127.0.0.1')
+    app.run()
 
 @app.route("/", methods=["GET", "POST"])
 def top():
@@ -67,10 +76,10 @@ def register():
         # ユーザ名が既にある場合
         if User.query.filter_by(username=username).first():
             flash('そのユーザー名は既に使われています')
-            return render_template("register.html")
+            return render_template("register.html", google_clientid = google_clientid)
         if User.query.filter_by(email=email).first():
             flash('そのメールアドレスは既に登録されています')
-            return render_template("register.html")
+            return render_template("register.html", google_clientid = google_clientid)
         new_user = User(
             username = username,
             email = email,
@@ -85,7 +94,7 @@ def register():
         return redirect(url_for('main'))
     else:
         print("error!")
-        return render_template("register.html")
+        return render_template("register.html", google_clientid = google_clientid)
 
 #ログイン機能
 
@@ -111,7 +120,38 @@ def login():
         flash('ユーザー名かパスワードが間違っています')
         return render_template("login.html", username = username)
     else:
-        return render_template("login.html")
+        return render_template("login.html", google_clientid = google_clientid)
+
+@app.route('/googlelogin_callback', methods=['POST'])
+def googlelogin_callback():
+    try:
+        # Specify the CLIENT_ID of the app that accesses the backend:
+        # idinfoは辞書型でデータを格納
+        idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requests.Request(), google_clientid)
+
+        # ID token is valid. Get the user's Google Account ID from the decoded token.
+        # そのgoogleアカウントのメールが既に登録済みの場合
+        print(idinfo)
+        if User.query.filter_by(email=idinfo['email']).first():
+            user = User.query.filter_by(email=idinfo['email']).first()
+            login_user(user)
+        # そのgoogleアカウントのメールがデータベースになく、新規登録の場合
+        else:
+            new_user = User(
+            username = idinfo['name'],
+            email = idinfo['email'],
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            # ここにフラッシュメッセージを追加
+            login_user(new_user)
+        session['logged_in']=True
+        return redirect(url_for('main'))
+    except ValueError:
+        # Invalid token
+        print('error! Invalid token')
+        flash('googleアカウントでの認証に失敗しました')
+        return redirect(url_for('login'))
 
 #ログアウト機能
 
