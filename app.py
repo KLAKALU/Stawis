@@ -74,10 +74,10 @@ def register():
         # ユーザ名が既にある場合
         if User.query.filter_by(username=username).first():
             flash('そのユーザー名は既に使われています')
-            return render_template("register.html")
+            return render_template("register.html", google_clientid = google_clientid)
         if User.query.filter_by(email=email).first():
             flash('そのメールアドレスは既に登録されています')
-            return render_template("register.html")
+            return render_template("register.html", google_clientid = google_clientid)
         new_user = User(
             username = username,
             email = email,
@@ -92,7 +92,7 @@ def register():
         return redirect(url_for('main'))
     else:
         print("error!")
-        return render_template("register.html")
+        return render_template("register.html, google_clientid = google_clientid")
 
 #ログイン機能
 
