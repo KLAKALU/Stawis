@@ -129,14 +129,15 @@ def googlelogin_callback():
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
         # そのgoogleアカウントのメールが既に登録済みの場合
-        if User.query.filter_by(email=idinfo['mail']).first():
-            user = User.query.filter_by(email=idinfo['mail']).first()
+        print(idinfo)
+        if User.query.filter_by(email=idinfo['email']).first():
+            user = User.query.filter_by(email=idinfo['email']).first()
             login_user(user)
         # そのgoogleアカウントのメールがデータベースになく、新規登録の場合
         else:
             new_user = User(
             username = idinfo['name'],
-            email = idinfo['mail'],
+            email = idinfo['email'],
             )
             db.session.add(new_user)
             db.session.commit()
