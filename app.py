@@ -131,7 +131,9 @@ def googlelogin_callback():
         return redirect(url_for('main'))
     except ValueError:
         # Invalid token
-        pass
+        print('error! Invalid token')
+        flash('googleアカウントでの認証に失敗しました')
+        return redirect(url_for('login'))
 
 #ログアウト機能
 
