@@ -92,7 +92,7 @@ def register():
         return redirect(url_for('main'))
     else:
         print("error!")
-        return render_template("register.html, google_clientid = google_clientid")
+        return render_template("register.html", google_clientid = google_clientid)
 
 #ログイン機能
 
