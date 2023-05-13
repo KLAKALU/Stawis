@@ -184,8 +184,9 @@ def add():
 
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
-            book_data=getbookdetail(rakuten_apikey, isbn)
-            if book_data == None:
+            try:
+                book_data=getbookdetail(rakuten_apikey, isbn)
+            except:
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")
             else:
@@ -196,7 +197,6 @@ def add():
                 book_author = book_data["writer"]
                 )
                 db.session.add(add_book)
-
         add_reviews=Review(
             user_id = current_user.id,
             isbn = isbn,
