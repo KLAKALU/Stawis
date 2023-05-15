@@ -170,7 +170,6 @@ def main():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     books = db.session.query(Book, Review).join(Book, Book.isbn == Review.isbn).filter(Review.user_id == current_user.id).all()
-    print(books)
     return render_template_modal('main.html',books=books)
 
 #add画面
