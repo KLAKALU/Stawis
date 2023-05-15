@@ -8,5 +8,6 @@
     <p>{{ review.comment }}</p>
   {% endfor %}
   <a href="{{ url_for('edit',isbn=book.isbn) }}">編集</a>
-  <a href="{{ url_for('delete',isbn=book.isbn) }}">削除</a>
+  <!--<a href="{{ url_for('delete',isbn=book.isbn) }}" id="delete_btn">削除</a>-->
+  <button onclick="confirmDelete('{{ book.isbn }}')">削除</button>
 {% endblock %}
