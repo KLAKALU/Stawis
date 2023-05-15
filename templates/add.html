@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
 <body>
-    <p class="page_name">検索画面</p>
+    <a class="page_name" href="/main">メイン画面に戻る</a>
     <div class="box">
-        <form action="/add" method="POST">
+        <form action="{{ url_for('add') }}" method="POST">
             <div class="input_isbn">
                 <label for="formFile">ISBN:</label>
                 <input type="text" name="ISBN" step="1.0" max="16" required>
