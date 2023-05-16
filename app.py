@@ -62,7 +62,6 @@ if __name__ == '__main__':
 def top():
     return render_template("top.html")
 
-line_login_querry = 'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=' + 'line_clientid' + '&redirect_uri='+'http%3A%2F%2Flocalhost%3A8080%2Flinelogin_callback' + '&state=12345abcde&scope=profile%20openid&nonce=09876xyz'
 
 #新規登録
 
