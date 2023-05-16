@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, flash, url_for,session
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from scraping import scraping
+from scraping import scraping_
 from flask_modals import Modal, render_template_modal
 from dotenv import load_dotenv
 from google.oauth2 import id_token
@@ -184,9 +184,14 @@ def add():
 
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
+<<<<<<< HEAD
             try:
                 book_data=getbookdetail(rakuten_apikey, isbn)
             except:
+=======
+            book_data=scraping_(isbn)
+            if book_data == None:
+>>>>>>> main
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")
             else:
