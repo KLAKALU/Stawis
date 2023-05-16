@@ -31,6 +31,7 @@ login_manager.login_view = 'login'
 load_dotenv() 
 rakuten_apikey = os.getenv('RAKUTEN_WEBAPI_KEY')
 google_clientid = os.getenv('GOOGLE_APIKEY')
+line_clientid = os.getenv('LINE_APIKEY')
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,6 +61,8 @@ if __name__ == '__main__':
 @app.route("/", methods=["GET", "POST"])
 def top():
     return render_template("top.html")
+
+line_login_querry = 'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=' + 'line_clientid' + '&redirect_uri='+'http%3A%2F%2Flocalhost%3A8080%2Flinelogin_callback' + '&state=12345abcde&scope=profile%20openid&nonce=09876xyz'
 
 #新規登録
 
@@ -95,7 +98,8 @@ def register():
         return redirect(url_for('main'))
     else:
         print("error!")
-        return render_template("register.html", google_clientid = google_clientid)
+        line_login_uri = createlineloginuri(line_clientid)
+        return render_template("register.html", google_clientid = google_clientid, line_login_uri = line_login_uri)
 
 #ログイン機能
 
