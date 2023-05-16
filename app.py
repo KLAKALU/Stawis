@@ -184,14 +184,9 @@ def add():
 
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
-<<<<<<< HEAD
             try:
                 book_data=getbookdetail(rakuten_apikey, isbn)
             except:
-=======
-            book_data=scraping_(isbn)
-            if book_data == None:
->>>>>>> main
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")
             else:
