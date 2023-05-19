@@ -1,6 +1,8 @@
 import requests
 import json
 
+class BookNotFundError(Exception):
+    pass
 
 def getbookdetail(apikey,isbn):
     endpoint = 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20170404'
@@ -10,7 +12,12 @@ def getbookdetail(apikey,isbn):
     r = requests.get(uri)
     json_load = r.json()
     print(json.dumps(json_load, indent=2, ensure_ascii=False))
-    info = {}
-    info["title"] = json_load['Items'][0]['Item']['title']
-    info['writer'] = json_load['Items'][0]['Item']['author']
-    return info
+    if json_load['Items']:
+        info = {}
+        info["title"] = json_load['Items'][0]['Item']['title']
+        info['writer'] = json_load['Items'][0]['Item']['author']
+        return info
+    else:
+        raise BookNotFundError
+
+
