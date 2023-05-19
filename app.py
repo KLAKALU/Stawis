@@ -164,13 +164,14 @@ def line_login():
         # requestsでリクエスト送信、レスポンスから情報取得
         pass
     elif request.method == 'GET':
-        uri = ''
-        uri += 'https://access.line.me/oauth2/v2.1/authorize?response_type=code'
-        uri += line_clientid
-        uri += '&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fline_login'
-        uri += '&state=' + state
-        uri += '&scope=profile%20openid'
-        return redirect(url_for('uri'))
+        apiquerry = ''
+        apiquerry += '?response_type=code'
+        apiquerry += line_clientid
+        apiquerry += '&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fline_login'
+        apiquerry += '&state=' + state
+        apiquerry += '&scope=profile%20openid'
+        endpoint = 'https://access.line.me/oauth2/v2.1/authorize' + apiquerry
+        return redirect(url_for(endpoint))
     
 
 
