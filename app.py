@@ -98,7 +98,7 @@ def register():
     else:
         print("error!")
         line_login_uri = createlineloginuri(line_clientid)
-        return render_template("register.html", google_clientid = google_clientid, line_login_uri = line_login_uri)
+        return render_template("register.html", google_clientid = google_clientid)
 
 #ログイン機能
 
@@ -156,6 +156,23 @@ def googlelogin_callback():
         print('error! Invalid token')
         flash('googleアカウントでの認証に失敗しました')
         return redirect(url_for('login'))
+
+@app.route('/line_login', methods=['GET', 'POST'])
+def line_login():
+    state = os.urandom(10)
+    if request.method == 'POST':
+        # requestsでリクエスト送信、レスポンスから情報取得
+        pass
+    elif request.method == 'GET':
+        uri = ''
+        uri += 'https://access.line.me/oauth2/v2.1/authorize?response_type=code'
+        uri += line_clientid
+        uri += '&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fline_login'
+        uri += '&state=' + state
+        uri += '&scope=profile%20openid'
+        return redirect(url_for('uri'))
+    
+
 
 #ログアウト機能
 
