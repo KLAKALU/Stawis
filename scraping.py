@@ -50,13 +50,13 @@ def scraping_(isbn):
         print("表紙画像が見つかりませんでした")
     else:
         img_src = src[0]
-        img_url = "https://books.rakuten.co.jp" + img_src
+        img_url = "https://books.rakuten.co.jp" + img_src[2:]
         res = requests.get(img_url, stream=True)
         image_name = img_src.rsplit('/', 1)[1]
         if res.status_code == 200:
             with open(f"images/" + image_name, "wb") as f:
                 f.write(res.content)
-    if title == [] and writer == []:
+    if not title and not writer:
         print("本が見つかりませんでした。")
         return None
     else:
@@ -68,3 +68,4 @@ def scraping_(isbn):
             info["writer"] = None
         info["img_url"] = img_url
         return info
+

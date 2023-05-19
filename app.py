@@ -10,6 +10,7 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 import os,datetime
 from flask_oauthlib.client import OAuth
+from getbookdetail import getbookdetail
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stawis.db'
@@ -183,19 +184,19 @@ def add():
 
         # Bookテーブルに本情報がなかった場合
         if not Book.query.filter_by(isbn=isbn).first():
-            book_data=scraping_(isbn)
-            if book_data == None:
+            try:
+                book_data=getbookdetail(rakuten_apikey, isbn)
+            except:
                 flash('情報を取得することができませんでした。')
                 return render_template("add.html")
             else:
                 add_book = Book(
                 isbn = isbn,
-                image_pass = book_data["img_url"],
+                # image_pass = book_data["img_url"],
                 book_title = book_data["title"],
                 book_author = book_data["writer"]
                 )
                 db.session.add(add_book)
-
         add_reviews=Review(
             user_id = current_user.id,
             isbn = isbn,
