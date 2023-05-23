@@ -132,6 +132,8 @@ def login():
         return render_template("login.html", username = username)
     else:
         return render_template("login.html", google_clientid = google_clientid)
+    
+# googlelogin
 
 @app.route('/googlelogin_callback', methods=['POST'])
 def googlelogin_callback():
@@ -163,6 +165,8 @@ def googlelogin_callback():
         print('error! Invalid token')
         flash('googleアカウントでの認証に失敗しました')
         return redirect(url_for('login'))
+    
+#line-login
 
 @app.route('/line_login', methods=['GET', 'POST'])
 def line_login():
@@ -178,7 +182,6 @@ def line_login_callback():
                                authorization_response=request.url)
     session['oauth_token'] = token
     return redirect(url_for('top'))
-    
 
 #ログアウト機能
 
