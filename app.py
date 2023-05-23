@@ -8,8 +8,10 @@ from flask_modals import Modal, render_template_modal
 from dotenv import load_dotenv
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from requests_oauthlib import OAuth2Session
 import os,datetime
 from flask_oauthlib.client import OAuth
+import urllib.parse
 from getbookdetail import getbookdetail
 
 app = Flask(__name__)
@@ -27,11 +29,18 @@ def load_user(user_id):
 
 login_manager.login_view = 'login'
 
+# This allows us to use a plain HTTP callback
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = "1"
+
 # 各APIのkeyを.envから取得
 load_dotenv() 
 rakuten_apikey = os.getenv('RAKUTEN_WEBAPI_KEY')
 google_clientid = os.getenv('GOOGLE_APIKEY')
-line_clientid = os.getenv('LINE_APIKEY')
+line_clientid = os.getenv('LINE_CLIENTID')
+line_clientsecret = os.getenv('LINE_CLIENTSECRET')
+line_authorization_base_url = 'https://access.line.me/oauth2/v2.1/authorize'
+line_token_url = 'https://api.line.me/oauth2/v2.1/token'
+line_redirect_uri = 'http://localhost:8080/line_login_callback'
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -96,8 +105,6 @@ def register():
         session['logged_in']=True
         return redirect(url_for('main'))
     else:
-        print("error!")
-        line_login_uri = createlineloginuri(line_clientid)
         return render_template("register.html", google_clientid = google_clientid)
 
 #ログイン機能
@@ -159,7 +166,12 @@ def googlelogin_callback():
 
 @app.route('/line_login', methods=['GET', 'POST'])
 def line_login():
-    state = os.urandom(10)
+    line = OAuth2Session(line_clientid, redirect_uri=line_redirect_uri, scope='profile openid')
+    authorization_url, state = line.authorization_url(line_authorization_base_url)
+    session['oauth_state'] = state
+    return redirect(authorization_url)
+
+
     if request.method == 'POST':
         # requestsでリクエスト送信、レスポンスから情報取得
         pass
@@ -172,8 +184,24 @@ def line_login():
         apiquerry += '&scope=profile%20openid'
         endpoint = 'https://access.line.me/oauth2/v2.1/authorize' + apiquerry
         return redirect(url_for(endpoint))
-    
 
+@app.route('/line_login_callback', methods=['GET'])
+def line_login_callback():
+    line = OAuth2Session(line_clientid, state=session['oauth_state'], redirect_uri=line_redirect_uri)
+    token = line.fetch_token(line_token_url, client_secret=line_clientsecret,
+                               authorization_response=request.url)
+    session['oauth_token'] = token
+    return redirect(url_for('top'))
+    #try:
+    #    req = request.args
+    #    user_id = req.get("user_id")
+    #    code = req.get('code')
+    #    state = req.get('state')
+    #    if state == session['state']:
+
+    #except:
+    #    pass
+    
 
 #ログアウト機能
 
