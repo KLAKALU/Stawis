@@ -171,20 +171,6 @@ def line_login():
     session['oauth_state'] = state
     return redirect(authorization_url)
 
-
-    if request.method == 'POST':
-        # requestsでリクエスト送信、レスポンスから情報取得
-        pass
-    elif request.method == 'GET':
-        apiquerry = ''
-        apiquerry += '?response_type=code'
-        apiquerry += line_clientid
-        apiquerry += '&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fline_login'
-        apiquerry += '&state=' + state
-        apiquerry += '&scope=profile%20openid'
-        endpoint = 'https://access.line.me/oauth2/v2.1/authorize' + apiquerry
-        return redirect(url_for(endpoint))
-
 @app.route('/line_login_callback', methods=['GET'])
 def line_login_callback():
     line = OAuth2Session(line_clientid, state=session['oauth_state'], redirect_uri=line_redirect_uri)
@@ -192,15 +178,6 @@ def line_login_callback():
                                authorization_response=request.url)
     session['oauth_token'] = token
     return redirect(url_for('top'))
-    #try:
-    #    req = request.args
-    #    user_id = req.get("user_id")
-    #    code = req.get('code')
-    #    state = req.get('state')
-    #    if state == session['state']:
-
-    #except:
-    #    pass
     
 
 #ログアウト機能
