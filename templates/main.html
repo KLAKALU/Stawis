@@ -5,17 +5,25 @@
 <div class="review_wrapper">
     {% for book in books %}
         <!--<button type="button" class="review_item" data-toggle="modal" data-target="#testModal">-->
-        <a href="{{ url_for('review',isbn=book[0].isbn) }}" class="review_item">
+        <a class="review_item" id="btn">
             <img src="{{ book[0].image_pass }}" alt="entry_image" class="book_image">
             <p>{{ book[0].book_title }}</p>
             <p>{{ book[0].book_author }}</p>
             <p>{{ book[1].date }}</p>
+            <p class="d" id="isbn">{{ book[0].isbn }}</p>
         </a>
         <div id="dialog">
-            <p id="comment"></p>
-            <button id="yes">はい</button>
-            <button id="no">いいえ</button>
+            <p id="commen">{{ book[1].comment }}</p>
+            <button id="edit">編集</button>
+            <button id="delete" onclick="confirmDelete('{{ book[0].isbn }}')">削除</button>
             <button id="cancel">キャンセル</button>
+        </div>
+        <div id="EditDialog" class='EditForm'>
+            <form method='POST' action="{{ url_for('edit', isbn=book[0].isbn) }}">
+                <textarea name="comment" required id="EditText">{{ book[1].comment }}</textarea>
+                <button type="submit" onclick='confirmEdit()'>更新</button>
+            </form>
+            <button id="EditCancel">キャンセル</button>
         </div>
         <div class="popup-bg-cover" id="cover"></div>
     {% else %}
