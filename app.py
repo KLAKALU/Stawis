@@ -157,6 +157,7 @@ def googlelogin_callback():
             new_user = User(
             username = idinfo['name'],
             email = idinfo['email'],
+            google_id = idinfo['sub']
             )
             db.session.add(new_user)
             db.session.commit()
