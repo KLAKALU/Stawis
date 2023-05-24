@@ -48,6 +48,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    google_id = db.Column(db.Text)
+    line_id = db.Column(db.Text)
+    user_icon_path = db.Column(db.Text)
     reviews = db.relationship('Review', backref='user', lazy=True)
 
 class Book(db.Model):
