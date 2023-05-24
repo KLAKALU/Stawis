@@ -12,7 +12,6 @@ from requests_oauthlib import OAuth2Session
 import requests
 import os,datetime
 from flask_oauthlib.client import OAuth
-import urllib.parse
 from getbookdetail import getbookdetail
 
 app = Flask(__name__)
