@@ -147,10 +147,14 @@ def googlelogin_callback():
         idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requsts_google.Request(), google_clientid)
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
-        # そのgoogleアカウントのメールが既に登録済みの場合
-        if User.query.filter_by(email=idinfo['email']).first():
-            user = User.query.filter_by(email=idinfo['email']).first()
+        # そのgoogleアカウントのidが既に登録済みの場合
+        if User.query.filter_by(google_id=idinfo['sub']).first():
+            user = User.query.filter_by(google_id=idinfo['sub']).first()
             login_user(user)
+
+        # そのgoogleアカウントのメールがデータベースに登録されている場合
+        # elif User.query.filter_by(email=idinfo['email']).first():
+
         # そのgoogleアカウントのメールがデータベースになく、新規登録の場合
         else:
             new_user = User(
@@ -195,8 +199,10 @@ def line_login_callback():
     print(json_data)
     print(token)
     new_user = User(
-        username = json_data['name']
+        username = json_data['name'],
+        line_id = json_data['sub']
     )
+    # ユーザー画像　json_data['picture']
     db.session.add(new_user)
     db.session.commit()
     # ここにフラッシュメッセージを追加
