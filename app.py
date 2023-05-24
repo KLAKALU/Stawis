@@ -148,7 +148,6 @@ def googlelogin_callback():
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
         # そのgoogleアカウントのメールが既に登録済みの場合
-        print(idinfo)
         if User.query.filter_by(email=idinfo['email']).first():
             user = User.query.filter_by(email=idinfo['email']).first()
             login_user(user)
