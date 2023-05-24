@@ -7,8 +7,9 @@ from scraping import scraping_
 from flask_modals import Modal, render_template_modal
 from dotenv import load_dotenv
 from google.oauth2 import id_token
-from google.auth.transport import requests
+from google.auth.transport import requests as requsts_google
 from requests_oauthlib import OAuth2Session
+import requests
 import os,datetime
 from flask_oauthlib.client import OAuth
 import urllib.parse
@@ -41,6 +42,7 @@ line_clientsecret = os.getenv('LINE_CLIENTSECRET')
 line_authorization_base_url = 'https://access.line.me/oauth2/v2.1/authorize'
 line_token_url = 'https://api.line.me/oauth2/v2.1/token'
 line_redirect_uri = 'http://localhost:8080/line_login_callback'
+line_verify_uri = 'https://api.line.me/oauth2/v2.1/verify'
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -140,7 +142,7 @@ def googlelogin_callback():
     try:
         # Specify the CLIENT_ID of the app that accesses the backend:
         # idinfoは辞書型でデータを格納
-        idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requests.Request(), google_clientid)
+        idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requsts_google.Request(), google_clientid)
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
         # そのgoogleアカウントのメールが既に登録済みの場合
@@ -181,7 +183,24 @@ def line_login_callback():
     token = line.fetch_token(line_token_url, client_secret=line_clientsecret,
                                authorization_response=request.url)
     session['oauth_token'] = token
-    return redirect(url_for('top'))
+    # line_data = OAuth2Session(line_clientid, token=session['oauth_token'])
+    # idinfo = line_data.post('https://api.line.me/oauth2/v2.1/verify').json()
+    # requestsを使い、データを取得
+    payload = {'id_token': token["id_token"], 'client_id': line_clientid}
+    r = requests.post(line_verify_uri,
+        data=payload)
+    json_data = r.json()
+    print(json_data)
+    print(token)
+    new_user = User(
+        username = json_data['name']
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    # ここにフラッシュメッセージを追加
+    login_user(new_user)
+    session['logged_in']=True
+    return redirect(url_for('main'))
 
 #ログアウト機能
 
