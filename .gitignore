@@ -2,3 +2,4 @@
 !/images/example.png
 __pycache__
 a.py
+.env
