@@ -274,17 +274,30 @@ def review(isbn):
 
 #編集機能
     
-@app.route('/edit/<isbn>',methods=["GET", "POST"])
-def edit(isbn):
-    book = Book.query.get_or_404(isbn)
-    reviews = Review.query.filter_by(isbn=isbn).all()
+#@app.route('/edit/<isbn>',methods=["POST"])
+#def edit(isbn):
+    #book = Book.query.get_or_404(isbn)
+    #reviews = Review.query.filter_by(isbn=isbn).all()
     if request.method == 'POST':
         comment = request.form.get("comment")
-        review = Review.query.filter_by(isbn=isbn).first()
+        review = Review.query.filter_by(isbn=isbn).all()
         review.comment = comment
         db.session.commit()
         return redirect(url_for('main'))
-    return render_template('edit.html', reviews=reviews, book=book)
+    #return render_template('edit.html', reviews=reviews, book=book)
+    
+@app.route('/edit/<isbn>', methods=["POST"])
+def edit(isbn):
+    if request.method == 'POST':
+        comment = request.form.get("comment")
+        review = Review.query.filter_by(isbn=isbn).first()
+        if review:
+            review.comment = comment
+        else:
+            review = Review(isbn=isbn, comment=comment)
+            db.session.add(review)
+        db.session.commit()
+        return redirect(url_for('main'))
 
 #削除機能
 
@@ -297,4 +310,3 @@ def delete(isbn):
         db.session.delete(review)
     db.session.commit()
     return redirect(url_for('main'))
-    
