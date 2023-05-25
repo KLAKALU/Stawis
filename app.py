@@ -196,15 +196,27 @@ def line_login_callback():
     r = requests.post(line_verify_uri,
         data=payload)
     json_data = r.json()
-    new_user = User(
-        username = json_data['name'],
-        line_id = json_data['sub']
-    )
-    # ユーザー画像　json_data['picture']
-    db.session.add(new_user)
-    db.session.commit()
-    # ここにフラッシュメッセージを追加
-    login_user(new_user)
+
+    # そのlineアカウントのidが既に登録済みの場合
+    if User.query.filter_by(line_id=json_data['sub']).first():
+        user = User.query.filter_by(line_id=json_data['sub']).first()
+        login_user(user)
+
+    # そのlineアカウントのメールがデータベースに登録されている場合
+    # elif User.query.filter_by(email=idinfo['email']).first():
+    
+    # そのlineアカウントのid,メールがデータベースになく、新規登録の場合
+    else:
+        new_user = User(
+            username = json_data['name'],
+            line_id = json_data['sub']
+        )
+        # ユーザー画像　json_data['picture']
+        db.session.add(new_user)
+        db.session.commit()
+        # ここにフラッシュメッセージを追加
+        login_user(new_user)
+
     session['logged_in']=True
     return redirect(url_for('main'))
 
