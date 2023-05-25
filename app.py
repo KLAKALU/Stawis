@@ -196,8 +196,6 @@ def line_login_callback():
     r = requests.post(line_verify_uri,
         data=payload)
     json_data = r.json()
-    print(json_data)
-    print(token)
     new_user = User(
         username = json_data['name'],
         line_id = json_data['sub']
