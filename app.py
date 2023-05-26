@@ -48,6 +48,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    google_id = db.Column(db.Text)
+    line_id = db.Column(db.Text)
+    user_icon_path = db.Column(db.Text)
     reviews = db.relationship('Review', backref='user', lazy=True)
 
 class Book(db.Model):
@@ -144,16 +147,20 @@ def googlelogin_callback():
         idinfo = id_token.verify_oauth2_token(request.form.get('credential'), requsts_google.Request(), google_clientid)
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
-        # そのgoogleアカウントのメールが既に登録済みの場合
-        print(idinfo)
-        if User.query.filter_by(email=idinfo['email']).first():
-            user = User.query.filter_by(email=idinfo['email']).first()
+        # そのgoogleアカウントのidが既に登録済みの場合
+        if User.query.filter_by(google_id=idinfo['sub']).first():
+            user = User.query.filter_by(google_id=idinfo['sub']).first()
             login_user(user)
+
+        # そのgoogleアカウントのメールがデータベースに登録されている場合
+        # elif User.query.filter_by(email=idinfo['email']).first():
+
         # そのgoogleアカウントのメールがデータベースになく、新規登録の場合
         else:
             new_user = User(
             username = idinfo['name'],
             email = idinfo['email'],
+            google_id = idinfo['sub']
             )
             db.session.add(new_user)
             db.session.commit()
@@ -189,15 +196,27 @@ def line_login_callback():
     r = requests.post(line_verify_uri,
         data=payload)
     json_data = r.json()
-    print(json_data)
-    print(token)
-    new_user = User(
-        username = json_data['name']
-    )
-    db.session.add(new_user)
-    db.session.commit()
-    # ここにフラッシュメッセージを追加
-    login_user(new_user)
+
+    # そのlineアカウントのidが既に登録済みの場合
+    if User.query.filter_by(line_id=json_data['sub']).first():
+        user = User.query.filter_by(line_id=json_data['sub']).first()
+        login_user(user)
+
+    # そのlineアカウントのメールがデータベースに登録されている場合
+    # elif User.query.filter_by(email=idinfo['email']).first():
+    
+    # そのlineアカウントのid,メールがデータベースになく、新規登録の場合
+    else:
+        new_user = User(
+            username = json_data['name'],
+            line_id = json_data['sub']
+        )
+        # ユーザー画像　json_data['picture']
+        db.session.add(new_user)
+        db.session.commit()
+        # ここにフラッシュメッセージを追加
+        login_user(new_user)
+
     session['logged_in']=True
     return redirect(url_for('main'))
 
